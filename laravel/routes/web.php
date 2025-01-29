@@ -30,7 +30,7 @@ Route::post('/register', [UserController::class, 'store'])->name('register');
 // route dashboard
 Route::middleware(['userAkses'])->group(function(){
     Route::get('/', function(){
-        return view('home');
+        return view('/home/index');
     });
     Route::get('/dashboard/data-dokter', [DokterController::class, 'dataDokter'])->name('dashboard.data-dokter');
     Route::get('/dashboard/data-pasien', [UserController::class, 'dataPasien'])->name('dashboard.data-pasien');
