@@ -50,39 +50,6 @@
 
             <div class="col-md-2 col-sm-6 col-6 mb-4">
                 <div>
-                    <h6 class="text-gradient text-primary text-sm">Company</h6>
-                    <ul class="flex-column ms-n3 nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://www.creative-tim.com/presentation" target="_blank">
-                                About Us
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://www.creative-tim.com/templates/free"
-                                target="_blank">
-                                Freebies
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://www.creative-tim.com/templates/premium"
-                                target="_blank">
-                                Premium Tools
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://www.creative-tim.com/blog" target="_blank">
-                                Blog
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-md-2 col-sm-6 col-6 mb-4">
-                <div>
                     <h6 class="text-gradient text-primary text-sm">Resources</h6>
                     <ul class="flex-column ms-n3 nav">
                         <li class="nav-item">
@@ -142,28 +109,6 @@
             </div>
 
             <div class="col-md-2 col-sm-6 col-6 mb-4 me-auto">
-                <div>
-                    <h6 class="text-gradient text-primary text-sm">Legal</h6>
-                    <ul class="flex-column ms-n3 nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://www.creative-tim.com/terms" target="_blank">
-                                Terms &amp; Conditions
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://www.creative-tim.com/privacy" target="_blank">
-                                Privacy Policy
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://www.creative-tim.com/license" target="_blank">
-                                Licenses (EULA)
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </div>
 
             <div class="col-12">

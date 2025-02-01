@@ -13,8 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// web.php
+
+
 Route::get('/', function () {
     return view('home/index');
+});
+Route::get('/login', function () {
+    return view('login');
 });
 
 Route::get('/admin', function () {

@@ -52,13 +52,6 @@
                                 <a href="{{ url('login') }}"
                                     class="btn btn-sm btn-outline-dark btn-round mb-0 me-1 mt-2 mt-md-0">Sign in</a>
                             </li>
-
-                            <li class="nav-item my-auto ms-3 ms-lg-0">
-                                <a href="/design/pages/sign-up.html"
-                                    class="btn btn-sm text-white  bg-dark  btn-round mb-0 me-1 mt-2 mt-md-0">Sign
-                                    Up</a>
-                            </li>
-
                         </ul>
                     </div>
                 </div>
