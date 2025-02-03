@@ -3,9 +3,9 @@
 <body class="index-page">
 
     <!-- Navbar -->
-  @include('layout.navbar')
-  
-    <!-- hero section -->
+    @include('layout.navbar')
+
+    <!-- Hero Section -->
     <header class="header-2 position-relative overflow-hidden">
         <style>
             .page-header::before {
@@ -32,6 +32,7 @@
                         <div class="container">
                             <h1 class="text-white pt-3 mt-n5 text-dark">Studio Delapan Kudus</h1>
                             <p class="lead text-white mt-3">Selamat datang di Studio Delapan Kudus.</p>
+                            <a href="https://wa.me/6281234567890" class="btn btn-light">Pesan Sekarang</a> <!-- CTA button -->
                         </div>
                     </div>
                 </div>
@@ -43,6 +44,7 @@
                         <div class="container">
                             <h1 class="text-white pt-3 mt-n5 text-dark">Kenangan yang Abadi</h1>
                             <p class="lead text-white mt-3">Abadikan momen spesial Anda bersama kami.</p>
+                            <a href="#paket" class="btn btn-light">Lihat Paket</a> <!-- CTA button -->
                         </div>
                     </div>
                 </div>
@@ -54,6 +56,7 @@
                         <div class="container">
                             <h1 class="text-white pt-3 mt-n5 text-dark">Layanan Terbaik</h1>
                             <p class="lead text-white mt-3">Kami menyediakan berbagai paket foto berkualitas tinggi.</p>
+                            <a href="#paket" class="btn btn-light">Lihat Paket</a> <!-- CTA button -->
                         </div>
                     </div>
                 </div>
@@ -90,14 +93,12 @@
         </div>
     </header>
 
-
-    <!-- kotak an bawah awalan -->
+    <!-- Kotak Statistik -->
     <section class="pt-3 pb-4" id="count-stats">
         <div class="container">
             <div class="row">
                 <div class="col-lg-9 z-index-2 border-radius-xl mt-n10 mx-auto py-3 blur shadow-blur">
                     <div class="row justify-content-center">
-    
                         <div class="col-md-4 position-relative mx-auto">
                             <div class="p-3 text-center">
                                 <h1 class="text-gradient text-dark">
@@ -118,13 +119,103 @@
                                 <p class="text-sm">Kami menyediakan berbagai macam paket foto untuk kalian.</p>
                             </div>
                         </div>
-    
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
 
-    <!-- footer -->
-  @include('layout.footer')
+    <!-- Section Paket Foto -->
+    <section id="paket" class="pt-5 pb-5 bg-light">
+        <div class="container text-center">
+            <h2 class="mb-4">Paket Foto Kami</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{ asset('img/foto/p1.jpg') }}" class="card-img-top" alt="Paket Foto 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Paket Wedding</h5>
+                            <p class="card-text">Abadikan momen pernikahanmu dengan kualitas foto terbaik.</p>
+                            <p class="card-price">IDR 2,500,000</p>
+                            <a href="#" class="btn btn-primary">Lihat Paket</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{ asset('img/foto/p1.jpg') }}" class="card-img-top" alt="Paket Foto 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Paket Prewedding</h5>
+                            <p class="card-text">Tampilkan kemesraan Anda sebelum hari besar dengan foto prewedding.</p>
+                            <p class="card-price">IDR 1,800,000</p>
+                            <a href="#" class="btn btn-primary">Lihat Paket</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{ asset('img/foto/p1.jpg') }}" class="card-img-top" alt="Paket Foto 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Paket Keluarga</h5>
+                            <p class="card-text">Abadikan momen kebersamaan keluarga Anda dengan harga terjangkau.</p>
+                            <p class="card-price">IDR 1,200,000</p>
+                            <a href="#" class="btn btn-primary">Lihat Paket</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimoni Pelanggan -->
+    <section id="testimoni" class="pt-5 pb-5">
+        <div class="container text-center">
+            <h2 class="mb-4">Apa Kata Mereka?</h2>
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <p class="lead">"Layanan sangat memuaskan! Hasil foto sangat bagus dan profesional."</p>
+                        <p><strong>- Andi, Pengantin</strong></p>
+                    </div>
+                    <div class="carousel-item">
+                        <p class="lead">"Paket prewedding sangat membantu kami dalam mengabadikan kenangan manis."</p>
+                        <p><strong>- Budi & Sari, Pasangan Prewedding</strong></p>
+                    </div>
+                    <div class="carousel-item">
+                        <p class="lead">"Keluarga kami merasa sangat puas dengan hasil foto keluarga yang diambil di sini."</p>
+                        <p><strong>- Joko, Keluarga</strong></p>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulir Pemesanan Cepat -->
+    <section id="pesan" class="pt-5 pb-5 bg-light">
+        <div class="container text-center">
+            <h2 class="mb-4">Pemesanan Cepat</h2>
+            <form action="#" method="POST">
+                <input type="text" class="form-control mb-2" placeholder="Nama Anda" required>
+                <input type="email" class="form-control mb-2" placeholder="Email Anda" required>
+                <select class="form-select mb-2" required>
+                    <option value="">Pilih Paket</option>
+                    <option value="wedding">Paket Wedding</option>
+                    <option value="prewedding">Paket Prewedding</option>
+                    <option value="keluarga">Paket Keluarga</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Kirim Pesanan</button>
+            </form>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    @include('layout.footer')
+
+</body>

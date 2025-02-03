@@ -21,7 +21,7 @@
                         <ul class="navbar-nav navbar-nav-hover ms-lg-12 ps-lg-5 w-100">
                             <li class="nav-item mx-2">
                                 <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                                    href="javascript:;" aria-expanded="false">
+                                    href="#paket" aria-expanded="false">
                                     Paket Foto
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"
@@ -33,7 +33,7 @@
 
                             <li class="nav-item mx-2">
                                 <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                                    href="javascript:;" id="dropdownMenuBlocks" data-bs-toggle="dropdown"
+                                    href="#pesan" id="dropdownMenuBlocks" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     Pesan
                                 </a>
@@ -42,7 +42,7 @@
 
                             <li class="nav-item mx-2">
                                 <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                                    href="javascript:;" id="dropdownMenuDocs" data-bs-toggle="dropdown"
+                                    href="#lokasi" id="dropdownMenuDocs" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     Lokasi
                                 </a>
