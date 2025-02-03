@@ -43,39 +43,35 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-9 z-index-2 border-radius-xl mt-n10 mx-auto py-3 blur shadow-blur">
-                    <div class="row">
-                        <div class="col-md-4 position-relative">
+                    <div class="row justify-content-center">
+    
+                        <div class="col-md-4 position-relative mx-auto">
                             <div class="p-3 text-center">
-                                <h1 class="text-gradient text-dark"><span id="state1" countTo="70">0</span>+
+                                <h1 class="text-gradient text-dark">
+                                    <span id="state1" countTo="100">0</span>+
                                 </h1>
-                                <h5 class="mt-3">Coded Elements</h5>
-                                <p class="text-sm">From buttons, to inputs, navbars, alerts or cards, you are covered
-                                </p>
+                                <h5 class="mt-3">Terpercaya</h5>
+                                <p class="text-sm">Lebih dari 100+ pelanggan yang puas dengan layanan kami.</p>
                             </div>
                             <hr class="vertical dark">
                         </div>
-                        <div class="col-md-4 position-relative">
+    
+                        <div class="col-md-4 position-relative mx-auto">
                             <div class="p-3 text-center">
-                                <h1 class="text-gradient text-dark"> <span id="state2" countTo="15">0</span>+
+                                <h1 class="text-gradient text-dark">
+                                    <span id="state2" countTo="15">0</span>+
                                 </h1>
-                                <h5 class="mt-3">Design Blocks</h5>
-                                <p class="text-sm">Mix the sections, change the colors and unleash your creativity</p>
-                            </div>
-                            <hr class="vertical dark">
-                        </div>
-                        <div class="col-md-4">
-                            <div class="p-3 text-center">
-                                <h1 class="text-gradient text-dark" id="state3" countTo="4">0</h1>
-                                <h5 class="mt-3">Pages</h5>
-                                <p class="text-sm">Save 3-4 weeks of work when you use our pre-made pages for your
-                                    website</p>
+                                <h5 class="mt-3">Banyak pilihan Paket</h5>
+                                <p class="text-sm">Kami menyediakan berbagai macam paket foto untuk kalian.</p>
                             </div>
                         </div>
+    
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    
 
     <!-- footer -->
   @include('layout.footer')
