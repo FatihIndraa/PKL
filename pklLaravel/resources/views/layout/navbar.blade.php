@@ -24,29 +24,21 @@
                                     href="#paket" aria-expanded="false">
                                     Paket Foto
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"
-                                    aria-labelledby="dropdownMenuPages">
-                                    <div class="d-none d-lg-block">
-                                    </div>
                             </li>
-
-
                             <li class="nav-item mx-2">
                                 <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                                    href="#pesan" id="dropdownMenuBlocks" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                                    href="#pesan" aria-expanded="false">
                                     Pesan
                                 </a>
                             </li>
-
-
                             <li class="nav-item mx-2">
                                 <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                                    href="#lokasi" id="dropdownMenuDocs" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                                    href="#lokasi" aria-expanded="false">
                                     Lokasi
                                 </a>
                             </li>
+
+
 
                             <li class="nav-item my-auto ms-auto">
                                 <a href="{{ url('login') }}"
