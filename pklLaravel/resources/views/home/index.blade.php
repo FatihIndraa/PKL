@@ -1,7 +1,6 @@
 @extends('layout.head')
 
 <body class="index-page">
-
     <!-- Navbar -->
     @include('layout.navbar')
 
@@ -15,13 +14,27 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba(0, 0, 0, 0.3);
+                background: rgba(0, 0, 0, 0.4);
                 z-index: 1;
+                transition: background 0.3s ease-in-out;
             }
 
             .page-header .container {
                 position: relative;
                 z-index: 2;
+                animation: fadeInUp 1s ease-in-out;
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
             }
         </style>
         <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -31,10 +44,10 @@
                     <div class="page-header min-vh-75 d-flex align-items-center justify-content-center text-center"
                         style="background-image: url('{{ asset('img/foto/1.jpg') }}'); background-size: cover; background-position: center;">
                         <div class="container">
-                            <h1 class="text-white pt-3 mt-n5 text-dark">Studio Delapan Kudus</h1>
-                            <p class="lead text-white mt-3">Selamat datang di Studio Delapan Kudus.</p>
-                            <a href="https://wa.me/62895381191380" class="btn btn-light">Pesan Sekarang</a>
-                            <!-- CTA button -->
+                            <h1 class="text-white pt-3 mt-n5 text-light fw-bold">Studio Delapan Kudus</h1>
+                            <p class="lead text-white mt-3">Tempat terbaik untuk mengabadikan momen berharga Anda.</p>
+                            <a href="https://wa.me/62895381191380" class="btn btn-primary shadow-lg">Pesan
+                                Sekarang</a>
                         </div>
                     </div>
                 </div>
@@ -44,9 +57,9 @@
                     <div class="page-header min-vh-75 d-flex align-items-center justify-content-center text-center"
                         style="background-image: url('{{ asset('img/foto/2.jpg') }}'); background-size: cover; background-position: center;">
                         <div class="container">
-                            <h1 class="text-white pt-3 mt-n5 text-dark">Kenangan yang Abadi</h1>
-                            <p class="lead text-white mt-3">Abadikan momen spesial Anda bersama kami.</p>
-                            <a href="#paket" class="btn btn-light">Lihat Paket</a> <!-- CTA button -->
+                            <h1 class="text-white pt-3 mt-n5 text-light fw-bold">Kenangan Abadi</h1>
+                            <p class="lead text-white mt-3">Abadikan momen spesial dengan hasil terbaik.</p>
+                            <a href="#paket" class="btn btn-warning shadow-lg">Lihat Paket</a>
                         </div>
                     </div>
                 </div>
@@ -56,26 +69,27 @@
                     <div class="page-header min-vh-75 d-flex align-items-center justify-content-center text-center"
                         style="background-image: url('{{ asset('img/foto/3.jpg') }}'); background-size: cover; background-position: center;">
                         <div class="container">
-                            <h1 class="text-white pt-3 mt-n5 text-dark">Layanan Terbaik</h1>
-                            <p class="lead text-white mt-3">Kami menyediakan berbagai paket foto berkualitas tinggi.</p>
-                            <a href="#paket" class="btn btn-light">Lihat Paket</a> <!-- CTA button -->
+                            <h1 class="text-white pt-3 mt-n5 text-light fw-bold">Layanan Terbaik</h1>
+                            <p class="lead text-white mt-3">Paket foto berkualitas untuk setiap momen istimewa.</p>
+                            <a href="#paket" class="btn btn-success shadow-lg">Lihat Paket</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Tombol navigasi -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <!-- Navigasi Carousel -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel"
+                data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel"
+                data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
 
-        <!-- Animasi Wave -->
         <div class="wave-container position-absolute w-100 bottom-0 start-0 z-index-2">
             <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                 viewBox="0 24 150 40" preserveAspectRatio="none" shape-rendering="auto">
@@ -95,7 +109,6 @@
         </div>
     </header>
 
-    <!-- Kotak Statistik -->
     <section class="pt-3 pb-4" id="count-stats">
         <div class="container">
             <div class="row">
@@ -128,41 +141,40 @@
     </section>
 
     <!-- Section Paket Foto -->
-    <section id="paket" class="pt-5 pb-5 bg-light">
+    <section id="paket" class="pt-5 pb-5">
         <div class="container text-center">
-            <h2 class="mb-4">Paket Foto Kami</h2>
+            <h2 class="mb-4 fw-bold">Paket Foto Kami</h2>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card shadow-lg">
                         <img src="{{ asset('img/foto/p1.jpg') }}" class="card-img-top" alt="Paket Foto 1">
                         <div class="card-body">
-                            <h5 class="card-title">Paket Wedding</h5>
-                            <p class="card-text">Abadikan momen pernikahanmu dengan kualitas foto terbaik.</p>
-                            <p class="card-price">IDR 2,500,000</p>
-                            <a href="#" class="btn btn-primary">Lihat Paket</a>
+                            <h5 class="card-title fw-bold">Paket Wedding</h5>
+                            <p class="card-text">Abadikan hari pernikahan Anda dengan hasil yang memukau.</p>
+                            <p class="card-price fw-bold">IDR 2,500,000</p>
+                            <a href="#" class="btn btn-primary">Lihat Detail</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card shadow-lg">
                         <img src="{{ asset('img/foto/p1.jpg') }}" class="card-img-top" alt="Paket Foto 2">
                         <div class="card-body">
-                            <h5 class="card-title">Paket Prewedding</h5>
-                            <p class="card-text">Tampilkan kemesraan Anda sebelum hari besar dengan foto prewedding.
-                            </p>
-                            <p class="card-price">IDR 1,800,000</p>
-                            <a href="#" class="btn btn-primary">Lihat Paket</a>
+                            <h5 class="card-title fw-bold">Paket Prewedding</h5>
+                            <p class="card-text">Ceritakan kisah cinta Anda melalui foto prewedding yang romantis.</p>
+                            <p class="card-price fw-bold">IDR 1,800,000</p>
+                            <a href="#" class="btn btn-warning">Lihat Detail</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card shadow-lg">
                         <img src="{{ asset('img/foto/p1.jpg') }}" class="card-img-top" alt="Paket Foto 3">
                         <div class="card-body">
-                            <h5 class="card-title">Paket Keluarga</h5>
-                            <p class="card-text">Abadikan momen kebersamaan keluarga Anda dengan harga terjangkau.</p>
-                            <p class="card-price">IDR 1,200,000</p>
-                            <a href="#" class="btn btn-primary">Lihat Paket</a>
+                            <h5 class="card-title fw-bold">Paket Keluarga</h5>
+                            <p class="card-text">Abadikan momen kebersamaan keluarga dengan harga terjangkau.</p>
+                            <p class="card-price fw-bold">IDR 1,200,000</p>
+                            <a href="#" class="btn btn-success">Lihat Detail</a>
                         </div>
                     </div>
                 </div>
@@ -204,7 +216,7 @@
     </section>
 
     <!-- Formulir Pemesanan Cepat -->
-    <section id="pesan" class="pt-5 pb-5 bg-light">
+    <section id="pesan" class="pt-5 pb-5">
         <div class="container text-center">
             <h2 class="mb-4">Pemesanan Cepat</h2>
             <form action="#" method="POST">
@@ -239,7 +251,8 @@
             <!-- Info Alamat -->
             <div class="mt-4">
                 <h5 class="fw-bold">Studio Delapan Kudus</h5>
-                <p>Jl. Dwarawati VIII Perumahan Gerbang Harapan No.8, Gondang Harapan, Gondangmanis, Kec. Bae, Kabupaten Kudus, Jawa Tengah 59327</p>
+                <p>Jl. Dwarawati VIII Perumahan Gerbang Harapan No.8, Gondang Harapan, Gondangmanis, Kec. Bae, Kabupaten
+                    Kudus, Jawa Tengah 59327</p>
                 <a href="https://maps.app.goo.gl/tuKGzEuUcnLaTrEr6" target="_blank" class="btn btn-primary">
                     <i class="fas fa-map-marker-alt"></i> Lihat di Google Maps
                 </a>
@@ -247,9 +260,6 @@
         </div>
     </section>
 
-
-
     <!-- Footer -->
     @include('layout.footer')
-
 </body>
