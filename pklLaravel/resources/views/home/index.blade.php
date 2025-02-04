@@ -15,9 +15,10 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba(0, 0, 0, 0.3); 
+                background: rgba(0, 0, 0, 0.3);
                 z-index: 1;
             }
+
             .page-header .container {
                 position: relative;
                 z-index: 2;
@@ -32,7 +33,8 @@
                         <div class="container">
                             <h1 class="text-white pt-3 mt-n5 text-dark">Studio Delapan Kudus</h1>
                             <p class="lead text-white mt-3">Selamat datang di Studio Delapan Kudus.</p>
-                            <a href="https://wa.me/6281234567890" class="btn btn-light">Pesan Sekarang</a> <!-- CTA button -->
+                            <a href="https://wa.me/62895381191380" class="btn btn-light">Pesan Sekarang</a>
+                            <!-- CTA button -->
                         </div>
                     </div>
                 </div>
@@ -109,7 +111,7 @@
                             </div>
                             <hr class="vertical dark">
                         </div>
-    
+
                         <div class="col-md-4 position-relative mx-auto">
                             <div class="p-3 text-center">
                                 <h1 class="text-gradient text-dark">
@@ -146,7 +148,8 @@
                         <img src="{{ asset('img/foto/p1.jpg') }}" class="card-img-top" alt="Paket Foto 2">
                         <div class="card-body">
                             <h5 class="card-title">Paket Prewedding</h5>
-                            <p class="card-text">Tampilkan kemesraan Anda sebelum hari besar dengan foto prewedding.</p>
+                            <p class="card-text">Tampilkan kemesraan Anda sebelum hari besar dengan foto prewedding.
+                            </p>
                             <p class="card-price">IDR 1,800,000</p>
                             <a href="#" class="btn btn-primary">Lihat Paket</a>
                         </div>
@@ -178,18 +181,22 @@
                         <p><strong>- Andi, Pengantin</strong></p>
                     </div>
                     <div class="carousel-item">
-                        <p class="lead">"Paket prewedding sangat membantu kami dalam mengabadikan kenangan manis."</p>
+                        <p class="lead">"Paket prewedding sangat membantu kami dalam mengabadikan kenangan manis."
+                        </p>
                         <p><strong>- Budi & Sari, Pasangan Prewedding</strong></p>
                     </div>
                     <div class="carousel-item">
-                        <p class="lead">"Keluarga kami merasa sangat puas dengan hasil foto keluarga yang diambil di sini."</p>
+                        <p class="lead">"Keluarga kami merasa sangat puas dengan hasil foto keluarga yang diambil di
+                            sini."</p>
                         <p><strong>- Joko, Keluarga</strong></p>
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel"
+                    data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel"
+                    data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 </button>
             </div>
@@ -213,6 +220,33 @@
             </form>
         </div>
     </section>
+
+    <!-- Section Lokasi -->
+    <section id="lokasi" class="pt-5 pb-5 bg-white">
+        <div class="container text-center">
+            <h2 class="mb-4">Lokasi Studio</h2>
+            <p class="mb-4">Temukan kami dengan mudah di lokasi berikut:</p>
+
+            <!-- Google Maps Embed -->
+            <div class="map-container"
+                style="position: relative; overflow: hidden; padding-bottom: 56.25%; height: 0;">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.027587835461!2d110.8601268!3d-6.766490499999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e70db48c0e732d5%3A0x5b474dcac6e67e00!2sStudio%20Delapan%20kudus!5e0!3m2!1sen!2sid!4v1738625756662!5m2!1sen!2sid"
+                    width="100%" height="700" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <!-- Info Alamat -->
+            <div class="mt-4">
+                <h5 class="fw-bold">Studio Delapan Kudus</h5>
+                <p>Jl. Dwarawati VIII Perumahan Gerbang Harapan No.8, Gondang Harapan, Gondangmanis, Kec. Bae, Kabupaten Kudus, Jawa Tengah 59327</p>
+                <a href="https://maps.app.goo.gl/tuKGzEuUcnLaTrEr6" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-map-marker-alt"></i> Lihat di Google Maps
+                </a>
+            </div>
+        </div>
+    </section>
+
 
 
     <!-- Footer -->

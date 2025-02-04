@@ -17,6 +17,7 @@
                             <span class="navbar-toggler-bar bar3"></span>
                         </span>
                     </button>
+                    
                     <div class="collapse navbar-collapse pt-3 pb-2 py-lg-0 w-100" id="navigation">
                         <ul class="navbar-nav navbar-nav-hover ms-lg-12 ps-lg-5 w-100">
                             <li class="nav-item mx-2">
@@ -37,8 +38,6 @@
                                     Lokasi
                                 </a>
                             </li>
-
-
 
                             <li class="nav-item my-auto ms-auto">
                                 <a href="{{ url('login') }}"

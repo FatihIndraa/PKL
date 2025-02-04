@@ -5,7 +5,7 @@
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="{{ asset('/img/delapan.png') }}">
+    <link rel="icon" sizes="32x32" type="image/png" href="{{ asset('/img/delapan.png') }}">
 
     <title>
         Studio Delapan
@@ -29,8 +29,9 @@
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
 @yield('konten')
+
 <body class="index-page">
-    
+
     <!--   Core JS Files   -->
     <script src="{{ asset('js/core/popper.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/core/bootstrap.min.js') }}" type="text/javascript"></script>
