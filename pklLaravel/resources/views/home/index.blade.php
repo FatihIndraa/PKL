@@ -222,7 +222,7 @@
             <form action="#" method="POST">
                 <input type="text" class="form-control mb-2" placeholder="Nama Anda" required>
                 <input type="email" class="form-control mb-2" placeholder="Email Anda" required>
-                <select class="form-select mb-2" required>
+                <select class="form-select mb-4" required>
                     <option value="">Pilih Paket</option>
                     <option value="wedding">Paket Wedding</option>
                     <option value="prewedding">Paket Prewedding</option>

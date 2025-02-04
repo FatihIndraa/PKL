@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+@extends('layout.head')
 
 <head>
     <meta charset="UTF-8">
@@ -16,7 +17,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://source.unsplash.com/featured/?medical');
+            background-image: url("{{ asset('img/foto/1.jpg') }}");
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -91,7 +92,7 @@
                 </div>
             </form>
             <div class="text-center">
-                <p>Sudah punya akun? <a href="{{ route('login') }}">Login</a></p>
+                <p>Sudah punya akun? <a href="{{ url('login') }}" target="_blank">Login</a></p>
             </div>
         </div>
     </div>
