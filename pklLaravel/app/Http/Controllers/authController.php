@@ -61,5 +61,16 @@ class AuthController extends Controller
         ])->withInput();
     }
     
+
+    // LOGOUT
+    public function logout(Request $request)
+{
+    Auth::logout(); // Log out the user
+
+    $request->session()->invalidate(); // Hapus session
+    $request->session()->regenerateToken(); // Regenerasi token CSRF untuk keamanan
+
+    return redirect('/'); // Redirect ke halaman utama atau halaman lain setelah logout
+}
     
 }

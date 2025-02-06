@@ -17,7 +17,7 @@
                             <span class="navbar-toggler-bar bar3"></span>
                         </span>
                     </button>
-                    
+
                     <div class="collapse navbar-collapse pt-3 pb-2 py-lg-0 w-100" id="navigation">
                         <ul class="navbar-nav navbar-nav-hover ms-lg-12 ps-lg-5 w-100">
                             <li class="nav-item mx-2">
@@ -39,10 +39,28 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item my-auto ms-auto">
-                                <a href="{{ url('login') }}"  target="_blank"
-                                    class="btn btn-sm btn-outline-dark btn-round mb-0 me-1 mt-2 mt-md-0">Sign in</a>
-                            </li>
+                            <!-- Check if the user is logged in -->
+                            @auth
+                                <!-- If the user is logged in (admin or member), show 'Logout' -->
+                                <li class="nav-item my-auto ms-auto">
+                                    <a href="{{ route('logout') }}"
+                                        class="btn btn-sm btn-outline-dark btn-round mb-0 me-1 mt-2 mt-md-0"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Logout
+                                    </a>
+                                    <!-- Hidden logout form -->
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
+                                        @csrf
+                                    </form>
+                                </li>
+                            @else
+                                <!-- If the user is not logged in, show 'Login' -->
+                                <li class="nav-item my-auto ms-auto">
+                                    <a href="{{ url('login') }}" target="_blank"
+                                        class="btn btn-sm btn-outline-dark btn-round mb-0 me-1 mt-2 mt-md-0">Sign in</a>
+                                </li>
+                            @endauth
                         </ul>
                     </div>
                 </div>

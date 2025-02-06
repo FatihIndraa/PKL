@@ -30,6 +30,8 @@ Route::post('/logout', function () {
     return redirect('/');
 })->name('logout');
 
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::get('/', function () {
     return view('home.index'); // Tamu tetap bisa melihat halaman utama
 });
