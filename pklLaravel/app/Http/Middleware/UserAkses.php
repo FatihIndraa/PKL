@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class UserAkses
 {
@@ -13,12 +14,12 @@ class UserAkses
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, $role)
     {
-        if ($request->user() && $request->user()->role == 'admin') {
+        if (Auth::check() && Auth::user()->role === $role) {
             return $next($request);
         }
 
-        return response('Anda tidak memiliki akses!', 403);
+        return redirect('/'); // Kembali ke halaman utama jika tidak punya akses
     }
 }

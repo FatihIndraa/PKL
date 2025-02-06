@@ -1,7 +1,6 @@
 @extends('layout.head')
 
 <body class="sign-in-illustration">
-
     <!-- Navbar -->
     @include ('layout.navbar')
 
@@ -17,21 +16,28 @@
                                 <p class="mb-0">Enter your email and password to sign in</p>
                             </div>
                             <div class="card-body">
-                                <form role="form">
+                                <form role="form" action="{{ route('login') }}" method="POST">
+                                    @csrf
                                     <div class="mb-3">
-                                        <input type="email" class="form-control form-control-lg" placeholder="Email"
-                                            aria-label="Email" aria-describedby="email-addon">
+                                        <input type="email" name="email" class="form-control form-control-lg"
+                                            placeholder="Email" aria-label="Email" aria-describedby="email-addon"
+                                            required>
                                     </div>
                                     <div class="mb-3">
-                                        <input type="password" class="form-control form-control-lg"
+                                        <input type="password" name="password" class="form-control form-control-lg"
                                             placeholder="Password" aria-label="Password"
-                                            aria-describedby="password-addon">
+                                            aria-describedby="password-addon" required>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" name="submit"
+                                        <button type="submit"
                                             class="btn btn-lg bg-gradient-dark btn-lg w-100 mt-4 mb-0">Sign in</button>
                                     </div>
                                 </form>
+                                @if ($errors->any())
+                                    <div class="alert alert-danger text-center mt-3">
+                                        <strong>{{ $errors->first() }}</strong>
+                                    </div>
+                                @endif
                             </div>
                             <div class="card-footer text-center pt-0 px-lg-2 px-1">
                                 <p class="mb-4 text-sm mx-auto">
