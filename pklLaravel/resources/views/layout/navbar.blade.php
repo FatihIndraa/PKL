@@ -38,6 +38,15 @@
                                     Lokasi
                                 </a>
                             </li>
+                            @auth
+                                <!-- If the user is logged in (admin or member), show 'Dashboard' -->
+                                <li class="nav-item mx-2">
+                                    <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
+                                        href="{{ route('dashboard') }}" aria-expanded="false">
+                                        Dashboard
+                                    </a>
+                                </li>
+                            @endauth
 
                             <!-- Check if the user is logged in -->
                             @auth
@@ -69,3 +78,4 @@
         </div>
     </div>
 </div>
+    
