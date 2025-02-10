@@ -20,6 +20,6 @@ class UserAkses
             return $next($request);
         }
 
-        return redirect('/'); // Kembali ke halaman utama jika tidak punya akses
+        return redirect('/');
     }
 }
