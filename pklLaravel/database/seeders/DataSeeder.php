@@ -9,9 +9,6 @@ use App\Models\User;
 
 class DataSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         //

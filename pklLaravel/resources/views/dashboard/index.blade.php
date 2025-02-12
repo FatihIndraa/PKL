@@ -4,13 +4,23 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Admin Dashboard - Studio Foto</title>
+    <link rel="icon" sizes="32x32" type="image/png" href="{{ asset('/img/delapan.png') }}">
+    <title>
+        Admin 
+        @if(Route::currentRouteName())
+            - {{ ucfirst(str_replace('-', ' ', Route::currentRouteName())) }}
+        @else
+            - Dashboard
+        @endif
+        - Studio Foto
+    </title>
 
     <!-- Icons & Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
     
     <!-- Fonts & Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
     <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet">
     
@@ -21,46 +31,63 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 </head>
 
+
 <body class="g-sidenav-show bg-gray-100">
-    
     <!-- Sidebar -->
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start bg-white my-2 ps-3" id="sidenav-main">
-        <div class="sidenav-header">
-            <a class="navbar-brand px-4 py-3 m-0" href="#">
-                <img src="{{ asset('assets/img/logo-ct-dark.png') }}" class="navbar-brand-img" width="26" height="26" alt="logo">
-                <span class="ms-1 text-sm text-dark">Studio Foto Admin</span>
+        <div class="sidenav-header d-flex align-items-center">
+            <a class="navbar-brand px-4 py-3 m-0 d-flex align-items-center" href="#">
+                <i class="fa-solid fa-camera text-dark me-2"></i>
+                <span class="text-sm text-dark fw-bold">Admin Studio</span>
             </a>
         </div>
         <hr class="horizontal dark mt-0 mb-2">
         <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
             <ul class="navbar-nav">
+                <!-- Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link active bg-gradient-dark text-white" href="/admin">
-                        <i class="material-symbols-rounded opacity-5">dashboard</i>
-                        <span class="nav-link-text ms-1">Dashboard</span>
+                    <a class="nav-link {{ request()->is('admin') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('dashboard') }}">
+                        <i class="material-symbols-rounded me-2">dashboard</i>
+                        <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
+    
+                <!-- Halaman Utama Menu -->
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="/admin/users">
-                        <i class="material-symbols-rounded opacity-5">people</i>
-                        <span class="nav-link-text ms-1">Pengguna</span>
+                    <a class="nav-link {{ request()->is('admin') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="/">
+                        <i class="material-symbols-rounded me-2">home</i>
+                        <span class="nav-link-text">Halaman Utama</span>
                     </a>
                 </li>
+    
+                <!-- Pengguna -->
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="/admin/packages">
-                        <i class="material-symbols-rounded opacity-5">photo_camera</i>
-                        <span class="nav-link-text ms-1">Paket Studio</span>
+                    <a class="nav-link {{ request()->is('admin/users') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="/admin/users">
+                        <i class="material-symbols-rounded me-2">people</i>
+                        <span class="nav-link-text">Pengguna</span>
                     </a>
                 </li>
+                
+                <!-- Paket Studio -->
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="/admin/orders">
-                        <i class="material-symbols-rounded opacity-5">shopping_cart</i>
-                        <span class="nav-link-text ms-1">Pemesanan</span>
+                    <a class="nav-link {{ request()->is('admin/packages') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="/admin/packages">
+                        <i class="material-symbols-rounded me-2">photo_camera</i>
+                        <span class="nav-link-text">Paket Studio</span>
+                    </a>
+                </li>
+                
+                <!-- Pemesanan -->
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('admin/orders') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="/admin/orders">
+                        <i class="material-symbols-rounded me-2">shopping_cart</i>
+                        <span class="nav-link-text">Pemesanan</span>
                     </a>
                 </li>
             </ul>
         </div>
     </aside>
+    
+    <!-- End Sidebar -->
     
     <!-- Main Content -->
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">

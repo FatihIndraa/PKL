@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 
 // route register
@@ -38,8 +39,7 @@ Route::get('/', function () {
     return view('home.index'); // Tamu tetap bisa melihat halaman utama
 });
 
-
 // route dashboard
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-})->middleware('auth')->name('dashboard');
+Route::get('/dashboard', [AdminController::class, 'dashboard'])
+    ->middleware('auth')
+    ->name('dashboard');
