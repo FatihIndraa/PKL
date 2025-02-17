@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
-use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\PaketController;
+
 
 // route register
 Route::get('/register', function () {
@@ -47,4 +47,12 @@ Route::middleware(['auth', 'userAkses:admin'])->group(function () {
 
 Route::middleware(['auth', 'userAkses:member'])->group(function () {
     Route::get('/dashboard/member', [DashboardController::class, 'index'])->name('dashboard.member');
+});
+
+Route::middleware(['auth', 'userAkses:admin'])->group(function () {
+    Route::get('/paket', [PaketController::class, 'index'])->name('paket'); // Halaman daftar paket
+    Route::get('/paket/create', [PaketController::class, 'create'])->name('paket.create'); // Form tambah paket
+    Route::post('/paket', [PaketController::class, 'store'])->name('paket.store'); // Proses simpan paket
+    // Contoh route untuk halaman dashboard paket
+    Route::get('/dashboard/paket', [DashboardController::class, 'paket'])->name('dashboard.paket');
 });

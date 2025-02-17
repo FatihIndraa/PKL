@@ -21,14 +21,52 @@
     <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
-    <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/nucleo-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/nucleo-svg.css') }}" rel="stylesheet">
 
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('css/material-dashboard.min.css?v=3.2.0') }}" rel="stylesheet">
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <style>
+        .form-container {
+            margin-top: 30px;
+        }
+
+        .form-container .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container .card-header {
+            background-color: #f8f9fa;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .form-container .form-control {
+            border-radius: 10px;
+        }
+
+        .form-container .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            padding: 12px 30px;
+            border-radius: 10px;
+        }
+
+        .form-container .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        .custom-file-input {
+            border-radius: 10px;
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -55,7 +93,6 @@
                     </a>
                 </li>
 
-
                 <!-- Dashboard -->
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('admin') ? 'active bg-gradient-dark text-white' : 'text-dark' }}"
@@ -64,7 +101,6 @@
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
-
 
                 @if (auth()->user()->role == 'admin')
                     <!-- Pengguna -->
@@ -107,95 +143,71 @@
         </div>
     </aside>
     <!-- End Sidebar -->
-    <!-- Main Content -->
-    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
-        <div class="container-fluid py-4">
+
+    {{-- <div class="container">
+            <h2>Daftar Paket Foto</h2>
+            <a href="{{ route('paket.create') }}" class="btn btn-success mb-3">Tambah Paket</a>
             <div class="row">
-                <div class="col-xl-3 col-sm-6">
-                    <div class="card">
-                        <div class="card-header p-3">
-                            <p class="text-sm mb-0">Total Pengguna</p>
-                            <h4 class="mb-0">{{ $totalUsers }}</h4>
+                @foreach ($pakets as $paket)
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="{{ asset('storage/' . $paket->gambar) }}" class="card-img-top"
+                                alt="{{ $paket->nama_paket }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $paket->nama_paket }}</h5>
+                                <p class="card-text">{{ $paket->deskripsi }}</p>
+                                <p class="card-text"><strong>Rp {{ number_format($paket->harga, 0, ',', '.') }}</strong>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-sm-6">
-                    <div class="card">
-                        <div class="card-header p-3">
-                            <p class="text-sm mb-0">Total Paket</p>
-                            <h4 class="mb-0">{{ $totalPackages }}</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6">
-                    <div class="card">
-                        <div class="card-header p-3">
-                            <p class="text-sm mb-0">Total Pemesanan</p>
-                            <h4 class="mb-0">{{ $totalOrders }}</h4>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
-            <div class="row mt-4">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header pb-0">
-                            <h6>Grafik Pemesanan</h6>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="ordersChart"></canvas>
-                        </div>
+        </div> --}}
+
+
+    <div class="container form-container mt-5">
+        <div class="card shadow-lg">
+            <div class="card-header bg-secondary text-white">
+                <h2 class="mb-0">Tambah Paket Foto</h2>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('paket.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-4">
+                        <label for="nama_paket" class="form-label fs-5">Nama Paket</label>
+                        <input type="text" class="form-control" id="nama_paket" name="nama_paket" required
+                            placeholder="Masukkan nama paket foto">
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header pb-0">
-                            <h6>Daftar Pengguna</h6>
-                        </div>
-                        <div class="card-body table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Nama</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($users as $user)
-                                        <tr>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->role }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+
+                    <div class="mb-4">
+                        <label for="harga" class="form-label fs-5">Harga</label>
+                        <input type="number" class="form-control" id="harga" name="harga" required
+                            placeholder="Masukkan harga paket">
                     </div>
-                </div>
+
+                    <div class="mb-4">
+                        <label for="deskripsi" class="form-label fs-5">Deskripsi</label>
+                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" required
+                            placeholder="Tuliskan deskripsi paket foto"></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="gambar" class="form-label fs-5">Upload Gambar</label>
+                        <input class="form-control form-control-sm" id="gambar" type="file" name="gambar"
+                            required accept="image/*">
+                        <div class="form-text text-muted mt-1">Pilih gambar untuk paket foto (jpg, jpeg, png)</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 mt-3 py-2">Simpan Paket</button>
+                </form>
             </div>
         </div>
-    </main>
+    </div>
 
     <!-- Core JS Files -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        var ctx = document.getElementById('ordersChart').getContext('2d');
-        var ordersChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: @json($months), // Menggunakan $months yang dikirimkan dari controller
-                datasets: [{
-                    label: 'Pemesanan',
-                    data: @json($orderData), // Menggunakan $orderData yang dikirimkan dari controller
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 2
-                }]
-            }
-        });
-    </script>
+    <script src="{{ asset('js/core/popper.min.js') }}"></script>
 </body>
 
 </html>

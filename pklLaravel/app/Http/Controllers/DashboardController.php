@@ -23,21 +23,28 @@ class DashboardController extends Controller
         $months = [];
         $orderData = [];
 
-        for ($i = 0; $i < 6; $i++) {
-            $month = Carbon::now()->subMonths($i)->format('F Y');
+        for ($i = 0; $i < 6; $i++) { // 6 bulan terakhir
+            $month = Carbon::now()->subMonths($i)->format('F Y'); // Nama bulan + tahun
             $count = Transaksi::whereMonth('created_at', Carbon::now()->subMonths($i)->month)
-                            ->whereYear('created_at', Carbon::now()->subMonths($i)->year)
-                            ->count();
+                ->whereYear('created_at', Carbon::now()->subMonths($i)->year)
+                ->count();
             array_unshift($months, $month);
             array_unshift($orderData, $count);
         }
 
+        // Kirimkan variabel ke tampilan
         return view('dashboard.index', compact('totalUsers', 'totalOrders', 'totalPackages', 'users', 'user', 'months', 'orderData'));
     }
+
 
     public function admin()
     {
         return $this->index(); // Admin juga menggunakan method index()
     }
 
+    public function paket()
+    {
+        // Logika untuk menampilkan paket atau halaman yang dimaksud
+        return view('dashboard.paket.index');  // Gantilah dengan tampilan sesuai kebutuhan
+    }
 }
