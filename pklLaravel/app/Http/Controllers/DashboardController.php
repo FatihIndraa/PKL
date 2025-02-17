@@ -23,8 +23,8 @@ class DashboardController extends Controller
         $months = [];
         $orderData = [];
 
-        for ($i = 0; $i < 6; $i++) { // 6 bulan terakhir
-            $month = Carbon::now()->subMonths($i)->format('F Y'); // Nama bulan + tahun
+        for ($i = 0; $i < 6; $i++) {
+            $month = Carbon::now()->subMonths($i)->format('F Y');
             $count = Transaksi::whereMonth('created_at', Carbon::now()->subMonths($i)->month)
                             ->whereYear('created_at', Carbon::now()->subMonths($i)->year)
                             ->count();
@@ -32,12 +32,12 @@ class DashboardController extends Controller
             array_unshift($orderData, $count);
         }
 
-        // Pastikan kamu mengirimkan $months dan $orderData juga ke view
         return view('dashboard.index', compact('totalUsers', 'totalOrders', 'totalPackages', 'users', 'user', 'months', 'orderData'));
     }
 
     public function admin()
     {
-        return view('dashboard.index'); // Tampilan dashboard admin
+        return $this->index(); // Admin juga menggunakan method index()
     }
+
 }

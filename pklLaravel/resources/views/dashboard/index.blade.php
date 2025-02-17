@@ -48,7 +48,7 @@
                 <!-- Dashboard -->
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('admin') ? 'active bg-gradient-dark text-white' : 'text-dark' }}"
-                        href="{{ route('dashboard') }}">
+                        href="{{ Auth::user()->role == 'admin' ? route('dashboard.admin') : route('dashboard.member') }}">
                         <i class="material-symbols-rounded me-2">dashboard</i>
                         <span class="nav-link-text">Dashboard</span>
                     </a>

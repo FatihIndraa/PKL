@@ -66,9 +66,7 @@ class Kernel extends HttpKernel
     ];
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
-        // Middleware custom untuk member & admin
-        'member' => \App\Http\Middleware\MemberMiddleware::class,
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'userAkses' => \App\Http\Middleware\UserAkses::class,
     ];
     
 }

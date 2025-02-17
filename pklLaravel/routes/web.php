@@ -41,24 +41,10 @@ Route::get('/', function () {
     return view('home.index'); // Tamu tetap bisa melihat halaman utama
 });
 
-// // Rute untuk admin
-// Route::middleware(['auth', 'admin'])->group(function () {
-//     Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
-//     Route::get('/kelola-user', [AdminController::class, 'index'])->name('kelola.user');
-// });
-
-// // Rute untuk member
-// Route::middleware(['auth', 'member'])->group(function () {
-//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-//     // Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan');
-// });
-
-Route::middleware(['auth', 'member'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth', 'userAkses:admin'])->group(function () {
+    Route::get('/dashboard/admin', [DashboardController::class, 'admin'])->name('dashboard.admin');
 });
 
-use App\Http\Middleware\CheckRole; // Pastikan middleware sudah diimport
-
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth', 'userAkses:member'])->group(function () {
+    Route::get('/dashboard/member', [DashboardController::class, 'index'])->name('dashboard.member');
 });
