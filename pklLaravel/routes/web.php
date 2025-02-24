@@ -51,8 +51,10 @@ Route::middleware(['auth', 'userAkses:member'])->group(function () {
 
 Route::middleware(['auth', 'userAkses:admin'])->group(function () {
     Route::get('/paket', [PaketController::class, 'index'])->name('paket'); // Halaman daftar paket
-    Route::get('/paket/create', [PaketController::class, 'create'])->name('paket.create'); // Form tambah paket
-    Route::post('/paket', [PaketController::class, 'store'])->name('paket.store'); // Proses simpan paket
+    Route::get('/paket/create', [PaketController::class, 'create'])->name('paket.create');
+    Route::post('/paket', [PaketController::class, 'store'])->name('paket.store');
+
     // Contoh route untuk halaman dashboard paket
     Route::get('/dashboard/paket', [DashboardController::class, 'paket'])->name('dashboard.paket');
+    Route::get('/paket', [PaketController::class, 'index'])->name('paket.index');   
 });

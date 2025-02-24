@@ -19,21 +19,8 @@ class DashboardController extends Controller
         $totalOrders = Transaksi::count();
         $users = User::all();
 
-        // Ambil data transaksi per bulan untuk grafik
-        $months = [];
-        $orderData = [];
-
-        for ($i = 0; $i < 6; $i++) { // 6 bulan terakhir
-            $month = Carbon::now()->subMonths($i)->format('F Y'); // Nama bulan + tahun
-            $count = Transaksi::whereMonth('created_at', Carbon::now()->subMonths($i)->month)
-                ->whereYear('created_at', Carbon::now()->subMonths($i)->year)
-                ->count();
-            array_unshift($months, $month);
-            array_unshift($orderData, $count);
-        }
-
         // Kirimkan variabel ke tampilan
-        return view('dashboard.index', compact('totalUsers', 'totalOrders', 'totalPackages', 'users', 'user', 'months', 'orderData'));
+        return view('dashboard.index', compact('totalUsers', 'totalOrders', 'totalPackages', 'users', 'user'));
     }
 
 

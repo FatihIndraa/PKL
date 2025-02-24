@@ -16,8 +16,10 @@ class PaketController extends Controller
 
     public function create()
     {
-        return view('dashboard.paket.index');
+        $pakets = Paket::all(); // Ambil semua paket
+        return view('dashboard.paket.tambah', compact('pakets')); // Kembalikan ke index
     }
+
 
     public function store(Request $request)
     {
@@ -37,7 +39,6 @@ class PaketController extends Controller
             'deskripsi' => $request->deskripsi,
             'gambar' => $gambarPath,
         ]);
-
-        return redirect()->route('dashboard.paket.index')->with('success', 'Paket berhasil ditambahkan!');
+        return redirect()->route('paket.index')->with('success', 'Paket berhasil ditambahkan!');
     }
 }
