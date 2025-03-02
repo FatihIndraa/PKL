@@ -37,6 +37,13 @@
                                                             '{{ number_format($paket->harga, 0, ',', '.') }}')">
                                     <i class="bi bi-eye"></i> Lihat Detail
                                 </button>
+                                <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $paket->id }}"
+                                    data-nama="{{ $paket->nama_paket }}" data-harga="{{ $paket->harga }}"
+                                    data-deskripsi="{{ $paket->deskripsi }}" data-gambar="{{ $paket->gambar }}"
+                                    data-bs-toggle="modal" data-bs-target="#editPaketModal">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </button>
+
                             </div>
                         </div>
                     </div>
@@ -96,6 +103,7 @@
             </div>
         </div>
     </div>
+
     {{-- Modal Detail Paket --}}
     <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -116,45 +124,151 @@
         </div>
     </div>
 
+    <!-- Modal Edit Paket -->
+    <div class="modal fade" id="editPaketModal" tabindex="-1" aria-labelledby="editPaketModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title" id="editPaketModalLabel">Edit Paket Foto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editPaketForm" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT') <!-- Tambahkan ini untuk update data -->
+
+                        <!-- ID Paket -->
+                        <input type="hidden" id="editPaketId" name="id">
+
+                        <div class="mb-3">
+                            <label for="edit_nama_paket" class="form-label fw-semibold">Nama Paket</label>
+                            <input type="text" class="form-control" id="edit_nama_paket" name="nama_paket" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_harga" class="form-label fw-semibold">Harga</label>
+                            <div class="input-group">
+                                <span class="input-group-text">Rp</span>
+                                <input type="number" class="form-control" id="edit_harga" name="harga" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_deskripsi" class="form-label fw-semibold">Deskripsi</label>
+                            <textarea class="form-control" id="edit_deskripsi" name="deskripsi" rows="3" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_gambar" class="form-label fw-semibold">Upload Gambar</label>
+                            <input class="form-control" id="edit_gambar" type="file" name="gambar"
+                                accept="image/*">
+                            <div class="form-text text-muted">Format yang didukung: JPG, JPEG, PNG.</div>
+                        </div>
+
+                        <div class="text-center">
+                            <img id="editPreview" class="img-fluid rounded shadow-sm d-none" style="max-height: 200px;">
+                        </div>
+
+                        <button type="submit" class="btn btn-warning w-100 mt-3 py-2">
+                            <i class="bi bi-save"></i> Simpan Perubahan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 @endsection
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Ketika tombol edit diklik
+        document.querySelectorAll(".btn-edit").forEach(button => {
+            button.addEventListener("click", function() {
+                // Ambil data paket dari atribut data-* pada tombol edit
+                let id = this.getAttribute("data-id");
+                let nama = this.getAttribute("data-nama");
+                let harga = this.getAttribute("data-harga");
+                let deskripsi = this.getAttribute("data-deskripsi");
+                let gambar = this.getAttribute("data-gambar");
 
-@section('scripts')
-    <script>
-        function showDetail(image, title, description, price) {
-            document.getElementById('modalImage').src = image;
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalDescription').innerText = description;
-            document.getElementById('modalPrice').innerText = price;
+                // Isi data ke dalam modal
+                document.getElementById("editPaketId").value = id;
+                document.getElementById("edit_nama_paket").value = nama;
+                document.getElementById("edit_harga").value = harga;
+                document.getElementById("edit_deskripsi").value = deskripsi;
 
-            var detailModal = new bootstrap.Modal(document.getElementById('detailModal'));
-            detailModal.show();
-        }
-
-        function previewImage(event) {
-            let input = event.target;
-            let preview = document.getElementById('preview');
-
-            if (input.files && input.files[0]) {
-                let reader = new FileReader();
-
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.classList.remove('d-none');
+                // Jika ada gambar, tampilkan preview
+                let preview = document.getElementById("editPreview");
+                if (gambar) {
+                    preview.src = `/storage/${gambar}`;
+                    preview.classList.remove("d-none");
+                } else {
+                    preview.classList.add("d-none");
                 }
 
-                reader.readAsDataURL(input.files[0]);
+                // Atur action form dengan ID paket yang dipilih
+                let form = document.getElementById("editPaketForm");
+                form.action = `/paket/${id}`;
+            });
+        });
+    });
+</script>
+
+<script>
+    function showDetail(image, title, description, price) {
+        document.getElementById('modalImage').src = image;
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalDescription').innerText = description;
+        document.getElementById('modalPrice').innerText = price;
+
+        var detailModal = new bootstrap.Modal(document.getElementById('detailModal'));
+        detailModal.show();
+    }
+
+    function editPaket(id) {
+        $.get("{{ url('paket') }}/" + id + "/edit")
+            .done(function(paket) {
+                $('#editPaketId').val(paket.id);
+                $('#edit_nama_paket').val(paket.nama_paket);
+                $('#edit_harga').val(paket.harga);
+                $('#edit_deskripsi').val(paket.deskripsi);
+                if (paket.gambar) {
+                    $('#editPreview').attr('src', "{{ asset('storage') }}/" + paket.gambar).removeClass('d-none');
+                } else {
+                    $('#editPreview').addClass('d-none');
+                }
+                $('#editPaketModal').modal('show');
+            })
+            .fail(function() {
+                alert("Paket tidak ditemukan.");
+            });
+    }
+
+    $('#editPaketForm').submit(function(e) {
+        e.preventDefault();
+        var id = $('#editPaketId').val();
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: "/paket/" + id,
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-HTTP-Method-Override': 'PUT'
+            },
+            success: function(response) {
+                alert("Paket berhasil diperbarui!");
+                location.reload();
+            },
+            error: function(xhr) {
+                alert("Terjadi kesalahan saat memperbarui paket.");
             }
-        }
+        });
 
-        function showDetail(image, title, description, price) {
-            document.getElementById('modalImage').src = image;
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalDescription').innerText = description;
-            document.getElementById('modalPrice').innerText = price;
-
-            var detailModal = new bootstrap.Modal(document.getElementById('detailModal'));
-            detailModal.show();
-        }
-    </script>
-@endsection
+    });
+</script>

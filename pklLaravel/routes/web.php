@@ -37,7 +37,14 @@ Route::middleware(['auth', 'userAkses:admin'])->group(function () {
 
     Route::get('/paket', [PaketController::class, 'index'])->name('paket.index');
     Route::get('/paket/create', [PaketController::class, 'create'])->name('paket.create');
-    Route::post('/paket', [PaketController::class, 'store'])->name('paket.store'); // Route untuk menyimpan paket
+    Route::post('/paket', [PaketController::class, 'store'])->name('paket.store'); // Menyimpan paket
+    Route::get('/paket/{id}/edit', [PaketController::class, 'edit'])->name('paket.edit');
+
+    // ✅ Route untuk update paket
+    Route::put('/paket/{id}', [PaketController::class, 'update'])->name('paket.update');
+
+    // Jika ingin alternatif POST (misalnya untuk AJAX)
+    Route::post('/paket/{id}/update', [PaketController::class, 'update'])->name('paket.postUpdate');
 
     // Dashboard admin untuk paket
     Route::get('/dashboard/paket', [DashboardController::class, 'paket'])->name('dashboard.paket');

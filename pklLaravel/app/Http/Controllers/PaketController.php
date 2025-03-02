@@ -50,4 +50,28 @@ class PaketController extends Controller
         ]);
         return redirect()->route('paket.index')->with('success', 'Paket berhasil ditambahkan!');
     }
+
+    public function edit($id)
+    {
+        $paket = Paket::findOrFail($id);
+        return response()->json($paket);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $paket = Paket::findOrFail($id);
+
+        $paket->update([
+            'nama_paket' => $request->nama_paket,
+            'harga' => $request->harga,
+            'deskripsi' => $request->deskripsi,
+        ]);
+
+        if ($request->hasFile('gambar')) {
+            $gambarPath = $request->file('gambar')->store('paket', 'public');
+            $paket->update(['gambar' => $gambarPath]);
+        }
+
+        return redirect()->route('paket.index')->with('success', 'Paket berhasil diupdate!');
+    }
 }
