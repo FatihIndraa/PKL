@@ -34,7 +34,7 @@
             var detailModal = new bootstrap.Modal(document.getElementById('detailModal'));
             detailModal.show();
         }
-    </script>
+    </script>`
     
 </body>
 

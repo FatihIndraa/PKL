@@ -107,6 +107,18 @@
             };
         }
     </script>
+    <script>
+        function showDetail(gambar, nama, deskripsi, harga) {
+            document.getElementById('detailGambar').src = gambar;
+            document.getElementById('detailNama').innerText = nama;
+            document.getElementById('detailDeskripsi').innerText = deskripsi;
+            document.getElementById('detailHarga').innerText = "IDR " + harga;
+
+            var myModal = new bootstrap.Modal(document.getElementById('detailModal'));
+            myModal.show();
+        }
+    </script>
+
 
 </body>
 

@@ -78,13 +78,11 @@
             </div>
 
             <!-- Navigasi Carousel -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel"
-                data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel"
-                data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
@@ -141,46 +139,61 @@
     </section>
 
     <!-- Section Paket Foto -->
-    <section id="paket" class="pt-5 pb-5">
+    <section id="paket" class="py-5">
         <div class="container text-center">
             <h2 class="mb-4 fw-bold">Paket Foto Kami</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card shadow-lg">
-                        <img src="{{ asset('img/foto/p1.jpg') }}" class="card-img-top" alt="Paket Foto 1">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Paket Wedding</h5>
-                            <p class="card-text">Abadikan hari pernikahan Anda dengan hasil yang memukau.</p>
-                            <p class="card-price fw-bold">IDR 2,500,000</p>
-                            <a href="#" class="btn btn-primary">Lihat Detail</a>
+
+            <div class="row g-4">
+                @foreach ($pakets as $paket)
+                    <div class="col-md-4">
+                        <div class="card shadow-lg border-0 h-100">
+                            <img src="{{ asset('storage/' . $paket->gambar) }}"
+                                class="card-img-top img-thumbnail rounded-top" alt="{{ $paket->nama_paket }}"
+                                onclick="showDetail('{{ asset('storage/' . $paket->gambar) }}', 
+                                                '{{ $paket->nama_paket }}', 
+                                                '{{ $paket->deskripsi }}', 
+                                                '{{ number_format($paket->harga, 0, ',', '.') }}')"
+                                style="cursor: pointer; object-fit: cover; height: 250px;">
+
+                            <div class="card-body text-center">
+                                <h5 class="card-title fw-bold">{{ $paket->nama_paket }}</h5>
+                                <p class="card-text">{{ Str::limit($paket->deskripsi, 80) }}</p>
+                                <p class="card-price fw-bold text-primary">
+                                    IDR {{ number_format($paket->harga, 0, ',', '.') }}
+                                </p>
+                                <button class="btn btn-primary"
+                                    onclick="showDetail('{{ asset('storage/' . $paket->gambar) }}', 
+                                                        '{{ $paket->nama_paket }}', 
+                                                        '{{ $paket->deskripsi }}', 
+                                                        '{{ number_format($paket->harga, 0, ',', '.') }}')">
+                                    <i class="bi bi-eye"></i> Lihat Detail
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card shadow-lg">
-                        <img src="{{ asset('img/foto/p1.jpg') }}" class="card-img-top" alt="Paket Foto 2">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Paket Prewedding</h5>
-                            <p class="card-text">Ceritakan kisah cinta Anda melalui foto prewedding yang romantis.</p>
-                            <p class="card-price fw-bold">IDR 1,800,000</p>
-                            <a href="#" class="btn btn-warning">Lihat Detail</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card shadow-lg">
-                        <img src="{{ asset('img/foto/p1.jpg') }}" class="card-img-top" alt="Paket Foto 3">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Paket Keluarga</h5>
-                            <p class="card-text">Abadikan momen kebersamaan keluarga dengan harga terjangkau.</p>
-                            <p class="card-price fw-bold">IDR 1,200,000</p>
-                            <a href="#" class="btn btn-success">Lihat Detail</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
+
+    <!-- Modal Detail Paket -->
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="detailModalLabel">Detail Paket</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="detailGambar" src="" class="img-fluid mb-3 rounded shadow-sm"
+                        alt="Gambar Paket" style="max-height: 400px;">
+                    <h4 id="detailNama" class="fw-bold"></h4>
+                    <p id="detailDeskripsi"></p>
+                    <p class="fw-bold text-primary">IDR <span id="detailHarga"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Testimoni Pelanggan -->
     <section id="testimoni" class="pt-5 pb-5">

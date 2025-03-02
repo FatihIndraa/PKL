@@ -66,7 +66,7 @@
                             @else
                                 <!-- If the user is not logged in, show 'Login' -->
                                 <li class="nav-item my-auto ms-auto">
-                                    <a href="{{ url('login') }}" target="_blank"
+                                    <a href="{{ url('login') }}"
                                         class="btn btn-sm btn-outline-dark btn-round mb-0 me-1 mt-2 mt-md-0">Sign in</a>
                                 </li>
                             @endauth

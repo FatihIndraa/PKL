@@ -6,27 +6,20 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaketController;
 
-
-// route register
+// Route untuk register
 Route::get('/register', function () {
     return view('register');
 });
 Route::post('/register', [AuthController::class, 'register']);
 
-
-// route login
+// Route untuk login
 Route::get('/login', function () {
     return view('login');
 })->name('login');
-// Proses login (POST)
 Route::post('/login', [AuthController::class, 'login']);
-// Menampilkan halaman utama setelah login
-Route::get('/home/index', function () {
-    return view('home.index');
-})->middleware('auth')->name('home.index');
 
 
-// Route logout
+// Route untuk logout
 Route::post('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
@@ -35,26 +28,22 @@ Route::post('/logout', function () {
 })->name('logout');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
+// Route untuk tamu & member: halaman utama dengan daftar paket
+Route::get('/', [PaketController::class, 'tampilPaket'])->name('home');
 
-// route tamu
-Route::get('/', function () {
-    return view('home.index'); // Tamu tetap bisa melihat halaman utama
-});
-
+// Route untuk admin
 Route::middleware(['auth', 'userAkses:admin'])->group(function () {
     Route::get('/dashboard/admin', [DashboardController::class, 'admin'])->name('dashboard.admin');
+
+    Route::get('/paket', [PaketController::class, 'index'])->name('paket.index');
+    Route::get('/paket/create', [PaketController::class, 'create'])->name('paket.create');
+    Route::post('/paket', [PaketController::class, 'store'])->name('paket.store'); // Route untuk menyimpan paket
+
+    // Dashboard admin untuk paket
+    Route::get('/dashboard/paket', [DashboardController::class, 'paket'])->name('dashboard.paket');
 });
 
+// Route untuk member
 Route::middleware(['auth', 'userAkses:member'])->group(function () {
     Route::get('/dashboard/member', [DashboardController::class, 'index'])->name('dashboard.member');
-});
-
-Route::middleware(['auth', 'userAkses:admin'])->group(function () {
-    Route::get('/paket', [PaketController::class, 'index'])->name('paket'); // Halaman daftar paket
-    Route::get('/paket/create', [PaketController::class, 'create'])->name('paket.create');
-    Route::post('/paket', [PaketController::class, 'store'])->name('paket.store');
-
-    // Contoh route untuk halaman dashboard paket
-    Route::get('/dashboard/paket', [DashboardController::class, 'paket'])->name('dashboard.paket');
-    Route::get('/paket', [PaketController::class, 'index'])->name('paket.index');   
 });
