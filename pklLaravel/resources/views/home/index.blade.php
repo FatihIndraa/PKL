@@ -227,8 +227,82 @@
             </div>
         </div>
     </section>
+    @if (Auth::check())
+        <p>Anda sedang login sebagai: {{ Auth::user()->name }} ({{ Auth::user()->email }})</p>
+    @else
+        <p>Anda belum login. Silakan login terlebih dahulu.</p>
+    @endif
 
-    <!-- Formulir Pemesanan Cepat -->
+
+    <!-- Formulir Pemesanan -->
+    @if (Auth::check())
+        
+    <section id="pesan" class="pt-5 pb-5">
+        <div class="container">
+            <h2 class="mb-3 fw-bold text-center">Booking Sesi Foto Anda Sekarang</h2>
+            <p class="mb-4 text-muted text-center">
+                Wujudkan momen spesial dengan sesi foto berkualitas.
+                Pilih paket yang sesuai, tentukan jadwal, dan kami siap mengabadikan momen terbaik Anda!
+            </p>
+
+            <form action="{{ route('pemesanan.store') }}" method="POST" class="row g-3">
+                @csrf
+
+                <!-- Nama -->
+                <div class="col-md-6">
+                    <label class="form-label, disable">Nama Lengkap</label>
+                    <input type="text" name="nama" class="form-control" placeholder="Masukkan nama Anda"
+                        required>
+                </div>
+
+                <!-- Email -->
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" value="{{ Auth::user()->email ?? '' }}" disabled>
+                    <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+                </div>
+
+
+                <!-- Pilihan Paket -->
+                <div class="col-md-6">
+                    <label class="form-label">Pilih Paket Foto</label>
+                    <select name="paket_id" class="form-select" required>
+                        <option value="">Pilih Paket</option>
+                        @foreach ($pakets as $paket)
+                            <option value="{{ $paket->id }}">{{ $paket->nama_paket }} - IDR
+                                {{ number_format($paket->harga, 0, ',', '.') }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Pilih Tanggal -->
+                <div class="col-md-6">
+                    <label class="form-label">Tanggal Sesi Foto</label>
+                    <input type="date" name="tanggal" class="form-control" required>
+                </div>
+
+                <!-- Pilih Jam -->
+                <div class="col-md-6">
+                    <label class="form-label">Jam Sesi Foto</label>
+                    <input type="time" name="jam" class="form-control" required>
+                </div>
+
+                <!-- Catatan Tambahan -->
+                <div class="col-md-6">
+                    <label class="form-label">Catatan Tambahan</label>
+                    <textarea name="catatan" class="form-control" rows="2" placeholder="Tambahkan catatan (opsional)"></textarea>
+                </div>
+
+                <!-- Tombol Submit -->
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary w-100">Pesan Sekarang</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    @endif
+
+    {{-- <!-- Formulir Pemesanan Cepat -->
     <section id="pesan" class="pt-5 pb-5">
         <div class="container text-center">
             <h2 class="mb-4">Pemesanan Cepat</h2>
@@ -244,7 +318,7 @@
                 <button type="submit" class="btn btn-primary">Kirim Pesanan</button>
             </form>
         </div>
-    </section>
+    </section> --}}
 
     <!-- Section Lokasi -->
     <section id="lokasi" class="pt-5 pb-5 bg-white">

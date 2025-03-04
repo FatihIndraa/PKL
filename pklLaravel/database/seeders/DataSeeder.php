@@ -2,16 +2,15 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Paket; // Pastikan Model Paket digunakan
 
 class DataSeeder extends Seeder
 {
     public function run(): void
     {
-        //
         // Admin User
         User::create([
             'name' => 'Admin Studio',
@@ -26,6 +25,26 @@ class DataSeeder extends Seeder
             'email' => 'member@studio.com',
             'password' => Hash::make('password123'),
             'role' => 'member',
+        ]);
+
+        // Paket Data
+        Paket::insert([
+            [
+                'nama_paket' => 'Paket Hemat',
+                'deskripsi' => 'Paket foto murah meriah dengan kualitas terbaik.',
+                'harga' => 150000,
+                'gambar' => 'paket/satu.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_paket' => 'Paket Premium',
+                'deskripsi' => 'Paket eksklusif dengan editing profesional.',
+                'harga' => 300000,
+                'gambar' => 'paket/duwa.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

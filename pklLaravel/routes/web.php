@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PemesananController;
 
 // Route untuk register
 Route::get('/register', function () {
@@ -51,18 +52,32 @@ Route::middleware(['auth', 'userAkses:admin'])->group(function () {
 
     // Dashboard admin untuk paket
     Route::get('/dashboard/paket', [DashboardController::class, 'paket'])->name('dashboard.paket');
-    
+
     Route::get('/pengguna', [UserController::class, 'index'])->name('pengguna.index');
     Route::get('/pengguna/create', [UserController::class, 'create'])->name('pengguna.create');
     Route::post('/pengguna', [UserController::class, 'store'])->name('pengguna.store');
     Route::get('/pengguna/{id}/edit', [UserController::class, 'edit'])->name('pengguna.edit');
     Route::put('/pengguna/{id}', [UserController::class, 'update'])->name('pengguna.update');
     Route::delete('/pengguna/{id}', [UserController::class, 'destroy'])->name('pengguna.destroy');
+
+    Route::get('/dashboard/pemesanan', [PemesananController::class, 'index'])->name('dashboard.pemesanan.index');
+    Route::post('/dashboard/pemesanan/{id}/approve', [PemesananController::class, 'approve'])->name('dashboard.pemesanan.approve');
+    Route::post('/dashboard/pemesanan/{id}/complete', [PemesananController::class, 'complete'])->name('dashboard.pemesanan.complete');
+    Route::post('/dashboard/pemesanan/{id}/updateStatus', [PemesananController::class, 'updateStatus'])->name('dashboard.pemesanan.updateStatus');
+    Route::post('/dashboard/pemesanan/{id}/updateSelesai', [PemesananController::class, 'updateSelesai'])->name('dashboard.pemesanan.updateSelesai');
+    Route::put('/dashboard/pemesanan/{id}/update', [PemesananController::class, 'update'])->name('dashboard.pemesanan.update');
+    Route::delete('/dashboard/pemesanan/{id}', [PemesananController::class, 'destroy'])->name('dashboard.pemesanan.destroy');
+    Route::post('/dashboard/pemesanan', [PemesananController::class, 'storeAdmin'])->name('dashboard.pemesanan.store');
 });
-
-
 
 // Route untuk member
 Route::middleware(['auth', 'userAkses:member'])->group(function () {
     Route::get('/dashboard/member', [DashboardController::class, 'index'])->name('dashboard.member');
+});
+
+// Route untuk semua user yang login (member & admin bisa pesan)
+Route::middleware(['auth'])->group(function () {
+    Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
+    Route::get('/pembayaran/{id}', [PemesananController::class, 'pembayaran'])->name('pembayaran.show');
+    Route::post('/pembayaran/{id}', [PemesananController::class, 'uploadBukti'])->name('pembayaran.upload');
 });
