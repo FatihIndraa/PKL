@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaketController;
+use App\Http\Controllers\UserController;
 
 // Route untuk register
 Route::get('/register', function () {
@@ -50,7 +51,16 @@ Route::middleware(['auth', 'userAkses:admin'])->group(function () {
 
     // Dashboard admin untuk paket
     Route::get('/dashboard/paket', [DashboardController::class, 'paket'])->name('dashboard.paket');
+    
+    Route::get('/pengguna', [UserController::class, 'index'])->name('pengguna.index');
+    Route::get('/pengguna/create', [UserController::class, 'create'])->name('pengguna.create');
+    Route::post('/pengguna', [UserController::class, 'store'])->name('pengguna.store');
+    Route::get('/pengguna/{id}/edit', [UserController::class, 'edit'])->name('pengguna.edit');
+    Route::put('/pengguna/{id}', [UserController::class, 'update'])->name('pengguna.update');
+    Route::delete('/pengguna/{id}', [UserController::class, 'destroy'])->name('pengguna.destroy');
 });
+
+
 
 // Route untuk member
 Route::middleware(['auth', 'userAkses:member'])->group(function () {
