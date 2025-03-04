@@ -58,20 +58,108 @@
                             </form>
                         </td>
                         <td>
-                            <!-- Tombol Detail -->
                             <button class="btn btn-info btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#modalDetail{{ $pemesanan->id }}">Detail</button>
-
-                            <!-- Tombol Edit -->
                             <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#modalEdit{{ $pemesanan->id }}">Edit</button>
-
-                            <!-- Tombol Hapus -->
                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#modalHapus{{ $pemesanan->id }}">Hapus</button>
                         </td>
                     </tr>
+
+
+                    <!-- Modal Detail -->
+                    <div class="modal fade" id="modalDetail{{ $pemesanan->id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Detail Pemesanan</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>Nama:</strong> {{ $pemesanan->nama }}</p>
+                                    <p><strong>Email:</strong> {{ $pemesanan->email }}</p>
+                                    <p><strong>Paket:</strong> {{ $pemesanan->paket->nama_paket }}</p>
+                                    <p><strong>Tanggal:</strong> {{ $pemesanan->tanggal }}</p>
+                                    <p><strong>Jam:</strong> {{ $pemesanan->jam }}</p>
+                                    <p><strong>Catatan:</strong> {{ $pemesanan->catatan ?? 'Tidak ada catatan' }}</p>
+                                    <h5>Bukti Pembayaran</h5>
+                                    @if ($pemesanan->bukti_pembayaran)
+                                        <img src="{{ asset('storage/' . $pemesanan->bukti_pembayaran) }}"
+                                            class="img-fluid">
+                                    @else
+                                        <p class="text-danger">Belum ada bukti pembayaran</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Edit -->
+                    <div class="modal fade" id="modalEdit{{ $pemesanan->id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit Pemesanan</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <form action="{{ route('dashboard.pemesanan.update', $pemesanan->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label>Nama</label>
+                                            <input type="text" name="nama" class="form-control"
+                                                value="{{ $pemesanan->nama }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Email</label>
+                                            <input type="email" name="email" class="form-control"
+                                                value="{{ $pemesanan->email }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Tanggal</label>
+                                            <input type="date" name="tanggal" class="form-control"
+                                                value="{{ $pemesanan->tanggal }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Jam</label>
+                                            <input type="time" name="jam" class="form-control"
+                                                value="{{ $pemesanan->jam }}">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Hapus -->
+                    <div class="modal fade" id="modalHapus{{ $pemesanan->id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Hapus Pemesanan</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Apakah Anda yakin ingin menghapus pesanan ini?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="{{ route('dashboard.pemesanan.destroy', $pemesanan->id) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Hapus</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
+
                 <!-- Modal Tambah Pemesanan -->
                 <div class="modal fade" id="modalTambahPemesanan" tabindex="-1">
                     <div class="modal-dialog">
@@ -122,96 +210,6 @@
                 </div>
 
 
-                <!-- Modal Detail -->
-                <div class="modal fade" id="modalDetail{{ $pemesanan->id }}" tabindex="-1"
-                    aria-labelledby="modalDetailLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Detail Pemesanan</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p><strong>Nama:</strong> {{ $pemesanan->nama }}</p>
-                                <p><strong>Email:</strong> {{ $pemesanan->email }}</p>
-                                <p><strong>Paket:</strong> {{ $pemesanan->paket->nama_paket }}</p>
-                                <p><strong>Tanggal:</strong> {{ $pemesanan->tanggal }}</p>
-                                <p><strong>Jam:</strong> {{ $pemesanan->jam }}</p>
-                                <p><strong>Catatan:</strong> {{ $pemesanan->catatan ?? 'Tidak ada catatan' }}</p>
-
-                                <h5>Bukti Pembayaran</h5>
-                                @if ($pemesanan->bukti_pembayaran)
-                                    <img src="{{ asset('storage/' . $pemesanan->bukti_pembayaran) }}" class="img-fluid">
-                                @else
-                                    <p class="text-danger">Belum ada bukti pembayaran</p>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modal Edit -->
-                <div class="modal fade" id="modalEdit{{ $pemesanan->id }}" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Edit Pemesanan</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <form action="{{ route('dashboard.pemesanan.update', $pemesanan->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label>Nama</label>
-                                        <input type="text" name="nama" class="form-control"
-                                            value="{{ $pemesanan->nama }}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label>Email</label>
-                                        <input type="email" name="email" class="form-control"
-                                            value="{{ $pemesanan->email }}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label>Tanggal</label>
-                                        <input type="date" name="tanggal" class="form-control"
-                                            value="{{ $pemesanan->tanggal }}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label>Jam</label>
-                                        <input type="time" name="jam" class="form-control"
-                                            value="{{ $pemesanan->jam }}">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modal Hapus -->
-                <div class="modal fade" id="modalHapus{{ $pemesanan->id }}" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Hapus Pemesanan</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Apakah Anda yakin ingin menghapus pesanan ini?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <form action="{{ route('dashboard.pemesanan.destroy', $pemesanan->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Hapus</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </tbody>
         </table>
     </div>
