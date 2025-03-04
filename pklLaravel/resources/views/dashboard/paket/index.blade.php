@@ -43,6 +43,12 @@
                                     data-bs-toggle="modal" data-bs-target="#editPaketModal">
                                     <i class="bi bi-pencil"></i> Edit
                                 </button>
+                                <!-- Tombol Hapus -->
+                                <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $paket->id }}"
+                                    data-nama="{{ $paket->nama_paket }}" data-bs-toggle="modal"
+                                    data-bs-target="#deletePaketModal">
+                                    <i class="bi bi-trash"></i> Hapus
+                                </button>
 
                             </div>
                         </div>
@@ -179,6 +185,31 @@
         </div>
     </div>
 
+    <!-- Modal Konfirmasi Hapus -->
+    <div class="modal fade" id="deletePaketModal" tabindex="-1" aria-labelledby="deletePaketModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deletePaketModalLabel">Konfirmasi Hapus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus paket <strong id="deletePaketNama"></strong>?</p>
+                    <form id="deletePaketForm" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" id="deletePaketId" name="id">
+                        <button type="submit" class="btn btn-danger w-100">
+                            <i class="bi bi-trash"></i> Hapus
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
 @endsection
@@ -270,5 +301,24 @@
             }
         });
 
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".btn-delete").forEach(button => {
+            button.addEventListener("click", function() {
+                // Ambil ID dan Nama Paket
+                let id = this.getAttribute("data-id");
+                let nama = this.getAttribute("data-nama");
+
+                // Tampilkan Nama Paket di Modal
+                document.getElementById("deletePaketNama").textContent = nama;
+
+                // Atur Action Form agar mengarah ke route yang benar
+                let form = document.getElementById("deletePaketForm");
+                form.action = `/paket/${id}`;
+            });
+        });
     });
 </script>

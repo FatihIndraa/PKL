@@ -74,4 +74,18 @@ class PaketController extends Controller
 
         return redirect()->route('paket.index')->with('success', 'Paket berhasil diupdate!');
     }
+
+    public function destroy($id)
+    {
+        $paket = Paket::findOrFail($id);
+
+        // Hapus gambar dari storage jika ada
+        if ($paket->gambar) {
+            Storage::delete('public/' . $paket->gambar);
+        }
+
+        $paket->delete();
+
+        return redirect()->route('paket.index')->with('success', 'Paket berhasil dihapus.');
+    }
 }

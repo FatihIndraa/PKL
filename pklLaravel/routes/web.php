@@ -46,6 +46,8 @@ Route::middleware(['auth', 'userAkses:admin'])->group(function () {
     // Jika ingin alternatif POST (misalnya untuk AJAX)
     Route::post('/paket/{id}/update', [PaketController::class, 'update'])->name('paket.postUpdate');
 
+    Route::delete('/paket/{id}', [PaketController::class, 'destroy'])->name('paket.destroy');
+
     // Dashboard admin untuk paket
     Route::get('/dashboard/paket', [DashboardController::class, 'paket'])->name('dashboard.paket');
 });
