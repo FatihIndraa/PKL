@@ -80,4 +80,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
     Route::get('/pembayaran/{id}', [PemesananController::class, 'pembayaran'])->name('pembayaran.show');
     Route::post('/pembayaran/{id}', [PemesananController::class, 'uploadBukti'])->name('pembayaran.upload');
+    Route::get('/dashboard/pemesanan', [PemesananController::class, 'index'])->name('dashboard.pemesanan.index');
 });
+
+Route::post('/dashboard/pemesanan/{id}/upload-bukti', [PemesananController::class, 'uploadBukti'])
+    ->name('dashboard.pemesanan.uploadBukti')
+    ->middleware('auth');

@@ -49,7 +49,7 @@
             @elseif(auth()->user()->role == 'member')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('member/orders') ? 'active bg-gradient-dark text-white' : 'text-dark' }}"
-                        href="/member/orders">
+                        href="{{ route('dashboard.pemesanan.index') }}">
                         <i class="material-symbols-rounded me-2">shopping_cart</i>
                         <span class="nav-link-text">Pemesanan</span>
                     </a>

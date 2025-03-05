@@ -11,11 +11,21 @@ class PemesananController extends Controller
 {
     public function index()
     {
-        $pemesanans = Pemesanan::with('paket')->get();
-        $pakets = Paket::all(); // Ambil semua paket
+        $user = auth()->user();
+        $pakets = Paket::all(); // Ambil semua paket untuk tampilan
+
+        // Jika admin, tampilkan semua pesanan
+        if ($user->role == 'admin') {
+            $pemesanans = Pemesanan::with('paket')->get();
+        } else {
+            // Jika member, hanya tampilkan pesanan miliknya
+            $pemesanans = Pemesanan::with('paket')->where('email', $user->email)->get();
+        }
 
         return view('dashboard.pemesanan.index', compact('pemesanans', 'pakets'));
     }
+
+
 
     public function store(Request $request)
     {
@@ -55,6 +65,7 @@ class PemesananController extends Controller
             'catatan' => 'nullable|string',
         ]);
 
+
         // Simpan ke database
         $pemesanan = Pemesanan::create([
             'user_id' => Auth::id(),
@@ -85,6 +96,10 @@ class PemesananController extends Controller
         ]);
 
         $pemesanan = Pemesanan::findOrFail($id);
+        if (!file_exists(public_path('uploads/bukti_pembayaran'))) {
+            mkdir(public_path('uploads/bukti_pembayaran'), 0777, true);
+        }
+
 
         if ($request->hasFile('bukti_pembayaran')) {
             $file = $request->file('bukti_pembayaran');
@@ -137,5 +152,11 @@ class PemesananController extends Controller
         Pemesanan::findOrFail($id)->delete();
 
         return redirect()->route('dashboard.pemesanan.index')->with('success', 'Pemesanan berhasil dihapus.');
+    }
+
+    public function create()
+    {
+        $pakets = Paket::all(); // Ambil semua paket untuk form pemesanan
+        return view('dashboard.pemesanan.create', compact('pakets'));
     }
 }
