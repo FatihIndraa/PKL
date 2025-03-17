@@ -227,13 +227,7 @@
             </div>
         </div>
     </section>
-    @if (Auth::check())
-        <p>Anda sedang login sebagai: {{ Auth::user()->name }} ({{ Auth::user()->email }})</p>
-    @else
-        <p>Anda belum login. Silakan login terlebih dahulu.</p>
-    @endif
-
-
+    
     <!-- Formulir Pemesanan -->
     @if (Auth::check())
         

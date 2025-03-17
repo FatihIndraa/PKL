@@ -252,6 +252,8 @@
                         <th>Paket</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
+                        <th>Status</th>
+                        <th>Selesai</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -263,6 +265,21 @@
                             <td>{{ $pemesanan->paket->nama_paket }}</td>
                             <td>{{ $pemesanan->tanggal }}</td>
                             <td>{{ $pemesanan->jam }}</td>
+                            <td>
+                                <span
+                                    class="badge 
+                                    {{ $pemesanan->status_pemesanan == 'pending' ? 'bg-warning text-dark' : '' }}
+                                    {{ $pemesanan->status_pemesanan == 'disetujui' ? 'bg-success' : '' }}
+                                    {{ $pemesanan->status_pemesanan == 'ditolak' ? 'bg-danger' : '' }}">
+                                    {{ ucfirst($pemesanan->status_pemesanan) }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge {{ $pemesanan->status_selesai ? 'bg-success' : 'bg-danger' }}">
+                                    {{ $pemesanan->status_selesai ? 'Selesai' : 'Belum Selesai' }}
+                                </span>
+                            </td>
+
                             <td>
                                 <button class="btn btn-info btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modalDetail{{ $pemesanan->id }}">Detail</button>
@@ -326,6 +343,55 @@
                             </div>
                         </div>
                     @endforeach
+
+                    <!-- Modal Tambah Pemesanan -->
+                    <div class="modal fade" id="modalTambahPemesanan" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Tambah Pemesanan</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <form action="{{ route('dashboard.pemesanan.store') }}" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label>Nama</label>
+                                            <input type="text" name="nama" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Email</label>
+                                            <input type="email" name="email" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Paket</label>
+                                            <select name="paket_id" class="form-select" required>
+                                                <option value="" selected disabled>Pilih Paket</option>
+                                                @foreach ($pakets as $paket)
+                                                    <option value="{{ $paket->id }}">{{ $paket->nama_paket }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Tanggal</label>
+                                            <input type="date" name="tanggal" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Jam</label>
+                                            <input type="time" name="jam" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Catatan (Opsional)</label>
+                                            <textarea name="catatan" class="form-control" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-success">Simpan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </tbody>
             @endif
         </table>
