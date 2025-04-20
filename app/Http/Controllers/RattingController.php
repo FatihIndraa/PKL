@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Ratting;
+use App\Models\Ratting; // Pastikan menggunakan model yang benar
 use Illuminate\Support\Facades\Auth;
 
 class RattingController extends Controller

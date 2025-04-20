@@ -14,15 +14,6 @@ class PaketController extends Controller
         return view('dashboard.paket.index', compact('pakets'));
     }
 
-    public function tampilPaket()
-    {
-        $pakets = Paket::all(); // Ambil semua paket dari database
-        return view('home.index', compact('pakets'));
-    }
-
-
-
-
     public function create()
     {
         $pakets = Paket::all(); // Ambil semua paket

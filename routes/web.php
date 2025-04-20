@@ -8,6 +8,7 @@ use App\Http\Controllers\PaketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\RattingController;
+use App\Http\Controllers\HomeController;
 
 // Route untuk register
 Route::get('/register', function () {
@@ -31,8 +32,7 @@ Route::post('/logout', function () {
 })->name('logout');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-// Route untuk tamu & member: halaman utama dengan daftar paket
-Route::get('/', [PaketController::class, 'tampilPaket'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Route untuk admin
 Route::middleware(['auth', 'userAkses:admin'])->group(function () {

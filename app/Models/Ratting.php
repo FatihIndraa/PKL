@@ -15,6 +15,7 @@ class Ratting extends Model
         'komentar',
     ];
 
+    // Rating.php (Model)
     public function user()
     {
         return $this->belongsTo(User::class);

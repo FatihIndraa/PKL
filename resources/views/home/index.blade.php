@@ -227,73 +227,73 @@
             </div>
         </div>
     </section>
-    
+
     <!-- Formulir Pemesanan -->
     @if (Auth::check())
-        
-    <section id="pesan" class="pt-5 pb-5">
-        <div class="container">
-            <h2 class="mb-3 fw-bold text-center">Booking Sesi Foto Anda Sekarang</h2>
-            <p class="mb-4 text-muted text-center">
-                Wujudkan momen spesial dengan sesi foto berkualitas.
-                Pilih paket yang sesuai, tentukan jadwal, dan kami siap mengabadikan momen terbaik Anda!
-            </p>
 
-            <form action="{{ route('pemesanan.store') }}" method="POST" class="row g-3">
-                @csrf
+        <section id="pesan" class="pt-5 pb-5">
+            <div class="container">
+                <h2 class="mb-3 fw-bold text-center">Booking Sesi Foto Anda Sekarang</h2>
+                <p class="mb-4 text-muted text-center">
+                    Wujudkan momen spesial dengan sesi foto berkualitas.
+                    Pilih paket yang sesuai, tentukan jadwal, dan kami siap mengabadikan momen terbaik Anda!
+                </p>
 
-                <!-- Nama -->
-                <div class="col-md-6">
-                    <label class="form-label, disable">Nama Lengkap</label>
-                    <input type="text" name="nama" class="form-control" placeholder="Masukkan nama Anda"
-                        required>
-                </div>
+                <form action="{{ route('pemesanan.store') }}" method="POST" class="row g-3">
+                    @csrf
 
-                <!-- Email -->
-                <div class="col-md-6">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" value="{{ Auth::user()->email ?? '' }}" disabled>
-                    <input type="hidden" name="email" value="{{ Auth::user()->email }}">
-                </div>
+                    <!-- Nama -->
+                    <div class="col-md-6">
+                        <label class="form-label, disable">Nama Lengkap</label>
+                        <input type="text" name="nama" class="form-control" placeholder="Masukkan nama Anda"
+                            required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" value="{{ Auth::user()->email ?? '' }}" disabled>
+                        <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+                    </div>
 
 
-                <!-- Pilihan Paket -->
-                <div class="col-md-6">
-                    <label class="form-label">Pilih Paket Foto</label>
-                    <select name="paket_id" class="form-select" required>
-                        <option value="">Pilih Paket</option>
-                        @foreach ($pakets as $paket)
-                            <option value="{{ $paket->id }}">{{ $paket->nama_paket }} - IDR
-                                {{ number_format($paket->harga, 0, ',', '.') }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                    <!-- Pilihan Paket -->
+                    <div class="col-md-6">
+                        <label class="form-label">Pilih Paket Foto</label>
+                        <select name="paket_id" class="form-select" required>
+                            <option value="">Pilih Paket</option>
+                            @foreach ($pakets as $paket)
+                                <option value="{{ $paket->id }}">{{ $paket->nama_paket }} - IDR
+                                    {{ number_format($paket->harga, 0, ',', '.') }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                <!-- Pilih Tanggal -->
-                <div class="col-md-6">
-                    <label class="form-label">Tanggal Sesi Foto</label>
-                    <input type="date" name="tanggal" class="form-control" required>
-                </div>
+                    <!-- Pilih Tanggal -->
+                    <div class="col-md-6">
+                        <label class="form-label">Tanggal Sesi Foto</label>
+                        <input type="date" name="tanggal" class="form-control" required>
+                    </div>
 
-                <!-- Pilih Jam -->
-                <div class="col-md-6">
-                    <label class="form-label">Jam Sesi Foto</label>
-                    <input type="time" name="jam" class="form-control" required>
-                </div>
+                    <!-- Pilih Jam -->
+                    <div class="col-md-6">
+                        <label class="form-label">Jam Sesi Foto</label>
+                        <input type="time" name="jam" class="form-control" required>
+                    </div>
 
-                <!-- Catatan Tambahan -->
-                <div class="col-md-6">
-                    <label class="form-label">Catatan Tambahan</label>
-                    <textarea name="catatan" class="form-control" rows="2" placeholder="Tambahkan catatan (opsional)"></textarea>
-                </div>
+                    <!-- Catatan Tambahan -->
+                    <div class="col-md-6">
+                        <label class="form-label">Catatan Tambahan</label>
+                        <textarea name="catatan" class="form-control" rows="2" placeholder="Tambahkan catatan (opsional)"></textarea>
+                    </div>
 
-                <!-- Tombol Submit -->
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary w-100">Pesan Sekarang</button>
-                </div>
-            </form>
-        </div>
-    </section>
+                    <!-- Tombol Submit -->
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary w-100">Pesan Sekarang</button>
+                    </div>
+                </form>
+            </div>
+        </section>
     @endif
 
     <!-- Section Lokasi -->
@@ -322,6 +322,39 @@
             </div>
         </div>
     </section>
+
+    {{-- section ratting --}}
+    <section id="testimoni" class="pt-5 pb-5">
+        <div class="container text-center">
+            <h2 class="mb-5 fw-bold">Apa Kata Mereka?</h2>
+            <div class="row justify-content-center">
+                @foreach ($rattings as $ratting)
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-0 shadow-sm p-4 rounded-4 h-100">
+                            {{-- Komentar --}}
+                            <p class="fst-italic">"{{ $ratting->komentar }}"</p>
+
+                            {{-- Bintang --}}
+                            <div class="mb-2">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $ratting->rating)
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    @else
+                                        <i class="bi bi-star text-warning"></i>
+                                    @endif
+                                @endfor
+                            </div>
+
+                            {{-- Nama pengguna --}}
+                            <p class="fw-semibold mb-0">- {{ $ratting->user->name }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+
 
     <!-- Footer -->
     @include('layout.footer')
