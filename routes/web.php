@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PemesananController;
+use App\Http\Controllers\RattingController;
 
 // Route untuk register
 Route::get('/register', function () {
@@ -36,13 +37,13 @@ Route::get('/', [PaketController::class, 'tampilPaket'])->name('home');
 // Route untuk admin
 Route::middleware(['auth', 'userAkses:admin'])->group(function () {
     Route::get('/dashboard/admin', [DashboardController::class, 'admin'])->name('dashboard.admin');
-
     Route::get('/paket', [PaketController::class, 'index'])->name('paket.index');
     Route::get('/paket/create', [PaketController::class, 'create'])->name('paket.create');
-    Route::post('/paket', [PaketController::class, 'store'])->name('paket.store'); // Menyimpan paket
+    Route::post('/paket', [PaketController::class, 'store'])->name('paket.store');
     Route::get('/paket/{id}/edit', [PaketController::class, 'edit'])->name('paket.edit');
+    Route::get('/admin/ratting', [DashboardController::class, 'ratting'])->name('ratting');
 
-    // ✅ Route untuk update paket
+    // Route untuk update paket
     Route::put('/paket/{id}', [PaketController::class, 'update'])->name('paket.update');
 
     // Jika ingin alternatif POST (misalnya untuk AJAX)
@@ -81,8 +82,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pembayaran/{id}', [PemesananController::class, 'pembayaran'])->name('pembayaran.show');
     Route::post('/pembayaran/{id}', [PemesananController::class, 'uploadBukti'])->name('pembayaran.upload');
     Route::get('/dashboard/pemesanan', [PemesananController::class, 'index'])->name('dashboard.pemesanan.index');
+    Route::get('/ratting', [RattingController::class, 'index'])->name('ratting.index');
+    Route::post('/ratting', [RattingController::class, 'store'])->name('ratting.store');
 });
 
 Route::post('/dashboard/pemesanan/{id}/upload-bukti', [PemesananController::class, 'uploadBukti'])
     ->name('dashboard.pemesanan.uploadBukti')
     ->middleware('auth');
+
+

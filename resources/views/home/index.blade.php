@@ -296,24 +296,6 @@
     </section>
     @endif
 
-    {{-- <!-- Formulir Pemesanan Cepat -->
-    <section id="pesan" class="pt-5 pb-5">
-        <div class="container text-center">
-            <h2 class="mb-4">Pemesanan Cepat</h2>
-            <form action="#" method="POST">
-                <input type="text" class="form-control mb-2" placeholder="Nama Anda" required>
-                <input type="email" class="form-control mb-2" placeholder="Email Anda" required>
-                <select class="form-select mb-4" required>
-                    <option value="">Pilih Paket</option>
-                    <option value="wedding">Paket Wedding</option>
-                    <option value="prewedding">Paket Prewedding</option>
-                    <option value="keluarga">Paket Keluarga</option>
-                </select>
-                <button type="submit" class="btn btn-primary">Kirim Pesanan</button>
-            </form>
-        </div>
-    </section> --}}
-
     <!-- Section Lokasi -->
     <section id="lokasi" class="pt-5 pb-5 bg-white">
         <div class="container text-center">

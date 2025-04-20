@@ -46,6 +46,13 @@
                         <span class="nav-link-text">Pemesanan</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.ratting') ? 'active bg-gradient-dark text-white' : 'text-dark' }}"
+                        href="{{ route('ratting') }}">
+                        <i class="material-symbols-rounded me-2">star_rate</i>
+                        <span class="nav-link-text">Ratting</span>
+                    </a>
+                </li>
             @elseif(auth()->user()->role == 'member')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('member/orders') ? 'active bg-gradient-dark text-white' : 'text-dark' }}"

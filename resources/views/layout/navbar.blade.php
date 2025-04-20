@@ -38,6 +38,12 @@
                                     Lokasi
                                 </a>
                             </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
+                                    href="{{ route('ratting.index') }}" aria-expanded="false">
+                                    Ratting
+                                </a>
+                            </li>
                             @auth
                                 <li class="nav-item mx-2">
                                     <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
