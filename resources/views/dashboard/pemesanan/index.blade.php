@@ -19,6 +19,7 @@
                         <th>Paket</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
+                        <th>Jam Selesai</th>
                         <th>Status</th>
                         <th>Selesai</th>
                         <th>Aksi</th>
@@ -32,6 +33,13 @@
                             <td>{{ $pemesanan->paket->nama_paket }}</td>
                             <td>{{ $pemesanan->tanggal }}</td>
                             <td>{{ $pemesanan->jam }}</td>
+                            <td>
+                                @php
+                                    $jamMulai = \Carbon\Carbon::createFromFormat('H:i:s', $pemesanan->jam);
+                                    $jamSelesai = $jamMulai->copy()->addMinutes($pemesanan->paket->durasi);
+                                @endphp
+                                {{ $jamSelesai->format('H:i') }}
+                            </td>
                             <td>
                                 <form action="{{ route('dashboard.pemesanan.updateStatus', $pemesanan->id) }}" method="POST">
                                     @csrf
@@ -50,17 +58,11 @@
                                 </form>
                             </td>
                             <td>
-                                <form action="{{ route('dashboard.pemesanan.updateSelesai', $pemesanan->id) }}"
-                                    method="POST">
-                                    @csrf
-                                    <select name="status_selesai" class="form-select form-select-sm"
-                                        onchange="this.form.submit()">
-                                        <option value="0" {{ !$pemesanan->status_selesai ? 'selected' : '' }}>Belum
-                                            Selesai</option>
-                                        <option value="1" {{ $pemesanan->status_selesai ? 'selected' : '' }}>Selesai
-                                        </option>
-                                    </select>
-                                </form>
+                                @if ($pemesanan->status_selesai)
+                                    <span class="badge bg-success">Selesai</span>
+                                @else
+                                    <span class="badge bg-warning">Berlangsung</span>
+                                @endif
                             </td>
                             <td>
                                 <button class="btn btn-info btn-sm" data-bs-toggle="modal"
@@ -161,6 +163,21 @@
                                                 <input type="time" name="jam" class="form-control"
                                                     value="{{ $pemesanan->jam }}">
                                             </div>
+                                            <div class="mb-3">
+                                                <label>Paket</label>
+                                                <select name="paket_id" class="form-select" required>
+                                                    @foreach ($pakets as $paket)
+                                                        <option value="{{ $paket->id }}"
+                                                            {{ $paket->id == $pemesanan->paket_id ? 'selected' : '' }}>
+                                                            {{ $paket->nama_paket }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label>Catatan</label>
+                                                <textarea name="catatan" class="form-control" rows="3">{{ $pemesanan->catatan }}</textarea>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-primary">Simpan</button>
@@ -244,6 +261,13 @@
                     </div>
                 </tbody>
             @endif
+
+
+
+
+
+
+            {{-- member --}}
             @if (auth()->user()->role == 'member')
                 <thead>
                     <tr>
@@ -252,6 +276,7 @@
                         <th>Paket</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
+                        <th>Jam Selesai</th>
                         <th>Status</th>
                         <th>Selesai</th>
                         <th>Aksi</th>
@@ -266,6 +291,13 @@
                             <td>{{ $pemesanan->tanggal }}</td>
                             <td>{{ $pemesanan->jam }}</td>
                             <td>
+                                @php
+                                    $jamMulai = \Carbon\Carbon::createFromFormat('H:i:s', $pemesanan->jam);
+                                    $jamSelesai = $jamMulai->copy()->addMinutes($pemesanan->paket->durasi);
+                                @endphp
+                                {{ $jamSelesai->format('H:i') }}
+                            </td>
+                            <td>
                                 <span
                                     class="badge 
                                     {{ $pemesanan->status_pemesanan == 'pending' ? 'bg-warning text-dark' : '' }}
@@ -275,9 +307,11 @@
                                 </span>
                             </td>
                             <td>
-                                <span class="badge {{ $pemesanan->status_selesai ? 'bg-success' : 'bg-danger' }}">
-                                    {{ $pemesanan->status_selesai ? 'Selesai' : 'Belum Selesai' }}
-                                </span>
+                                @if ($pemesanan->status_selesai)
+                                    <span class="badge bg-success">Selesai</span>
+                                @else
+                                    <span class="badge bg-warning">Berlangsung</span>
+                                @endif
                             </td>
 
                             <td>
@@ -305,6 +339,13 @@
                                         <p><strong>Paket:</strong> {{ $pemesanan->paket->nama_paket }}</p>
                                         <p><strong>Tanggal:</strong> {{ $pemesanan->tanggal }}</p>
                                         <p><strong>Jam:</strong> {{ $pemesanan->jam }}</p>
+                                        <p><strong>Jam Selesai: </strong>
+                                            @php
+                                                $jamMulai = \Carbon\Carbon::createFromFormat('H:i:s', $pemesanan->jam);
+                                                $jamSelesai = $jamMulai->copy()->addMinutes($pemesanan->paket->durasi);
+                                            @endphp
+                                            {{ $jamSelesai->format('H:i') }}
+                                        </p>
                                         <p><strong>Catatan:</strong> {{ $pemesanan->catatan ?? 'Tidak ada catatan' }}</p>
                                         <h5>Bukti Pembayaran</h5>
                                         @if ($pemesanan->bukti_pembayaran)

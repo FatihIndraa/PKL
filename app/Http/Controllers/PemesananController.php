@@ -6,27 +6,39 @@ use Illuminate\Http\Request;
 use App\Models\Pemesanan;
 use App\Models\Paket;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PemesananController extends Controller
 {
     public function index()
     {
         $user = auth()->user();
-        $pakets = Paket::all(); // Ambil semua paket untuk tampilan
+        $pakets = Paket::all();
 
-        // Jika admin, tampilkan semua pesanan
-        if ($user->role == 'admin') {
-            $pemesanans = Pemesanan::with('paket')->get();
-        } else {
-            // Jika member, hanya tampilkan pesanan miliknya
-            $pemesanans = Pemesanan::with('paket')->where('email', $user->email)->get();
-        }
+        // Update status selesai otomatis
+        $this->updateCompletedStatus();
+
+        $pemesanans = Pemesanan::with(['paket', 'user'])
+            ->when($user->role == 'member', function ($query) use ($user) {
+                return $query->where('user_id', $user->id);
+            })
+            ->latest()
+            ->get();
 
         return view('dashboard.pemesanan.index', compact('pemesanans', 'pakets'));
     }
 
-
-
+    protected function updateCompletedStatus()
+    {
+        Pemesanan::where('status_selesai', false)
+            ->where('status_pemesanan', 'disetujui')
+            ->get()
+            ->each(function ($pemesanan) {
+                if ($pemesanan->is_completed) {
+                    $pemesanan->update(['status_selesai' => true]);
+                }
+            });
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -38,7 +50,8 @@ class PemesananController extends Controller
             'catatan' => 'nullable|string',
         ]);
 
-        // Simpan ke database
+        $paket = Paket::findOrFail($request->paket_id);
+
         $pemesanan = Pemesanan::create([
             'user_id' => Auth::id(),
             'nama' => $request->nama,
@@ -47,10 +60,10 @@ class PemesananController extends Controller
             'tanggal' => $request->tanggal,
             'jam' => $request->jam,
             'catatan' => $request->catatan,
-            'status_pemesanan' => 'pending', // Status awal 'pending'
+            'status_pemesanan' => 'pending',
+            // Tidak perlu menyimpan jam_selesai karena dihitung via accessor
         ]);
 
-        // Redirect ke halaman pembayaran setelah pemesanan sukses
         return redirect()->route('pembayaran.show', $pemesanan->id);
     }
 
@@ -65,8 +78,8 @@ class PemesananController extends Controller
             'catatan' => 'nullable|string',
         ]);
 
+        $paket = Paket::findOrFail($request->paket_id);
 
-        // Simpan ke database
         $pemesanan = Pemesanan::create([
             'user_id' => Auth::id(),
             'nama' => $request->nama,
@@ -75,17 +88,15 @@ class PemesananController extends Controller
             'tanggal' => $request->tanggal,
             'jam' => $request->jam,
             'catatan' => $request->catatan,
-            'status_pemesanan' => 'pending', // Status awal 'pending'
+            'status_pemesanan' => 'pending',
         ]);
 
-        return redirect()->route('dashboard.pemesanan.index', $pemesanan->id);
+        return redirect()->route('dashboard.pemesanan.index')->with('success', 'Pemesanan berhasil dibuat');
     }
-
-
 
     public function pembayaran($id)
     {
-        $pemesanan = Pemesanan::findOrFail($id);
+        $pemesanan = Pemesanan::with('paket')->findOrFail($id);
         return view('home.pembayaran', compact('pemesanan'));
     }
 
@@ -96,10 +107,11 @@ class PemesananController extends Controller
         ]);
 
         $pemesanan = Pemesanan::findOrFail($id);
+
+        // Buat direktori jika belum ada
         if (!file_exists(public_path('uploads/bukti_pembayaran'))) {
             mkdir(public_path('uploads/bukti_pembayaran'), 0777, true);
         }
-
 
         if ($request->hasFile('bukti_pembayaran')) {
             $file = $request->file('bukti_pembayaran');
@@ -108,7 +120,7 @@ class PemesananController extends Controller
 
             $pemesanan->update([
                 'bukti_pembayaran' => $filename,
-                'status_pemesanan' => 'pending',
+                'status_pemesanan' => 'pending', // Tetap pending sampai admin approve
             ]);
         }
 
@@ -125,38 +137,57 @@ class PemesananController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
+        $request->validate([
+            'status_pemesanan' => 'required|in:pending,disetujui,ditolak'
+        ]);
+
         $pemesanan = Pemesanan::findOrFail($id);
         $pemesanan->update(['status_pemesanan' => $request->status_pemesanan]);
 
-        return redirect()->route('dashboard.pemesanan.index')->with('success', 'Status pemesanan diperbarui.');
+        return redirect()->back()->with('success', 'Status pemesanan diperbarui.');
     }
 
     public function updateSelesai(Request $request, $id)
     {
+        $request->validate([
+            'status_selesai' => 'required|boolean'
+        ]);
+
         $pemesanan = Pemesanan::findOrFail($id);
         $pemesanan->update(['status_selesai' => $request->status_selesai]);
 
-        return redirect()->route('dashboard.pemesanan.index')->with('success', 'Status selesai diperbarui.');
+        return redirect()->back()->with('success', 'Status selesai diperbarui.');
     }
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email',
+            'paket_id' => 'required|exists:pakets,id',
+            'tanggal' => 'required|date',
+            'jam' => 'required',
+            'catatan' => 'nullable|string',
+        ]);
+
         $pemesanan = Pemesanan::findOrFail($id);
-        $pemesanan->update($request->all());
+        $pemesanan->update($request->only([
+            'nama',
+            'email',
+            'paket_id',
+            'tanggal',
+            'jam',
+            'catatan'
+        ]));
 
         return redirect()->route('dashboard.pemesanan.index')->with('success', 'Pemesanan berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
-        Pemesanan::findOrFail($id)->delete();
+        $pemesanan = Pemesanan::findOrFail($id);
+        $pemesanan->delete();
 
         return redirect()->route('dashboard.pemesanan.index')->with('success', 'Pemesanan berhasil dihapus.');
-    }
-
-    public function create()
-    {
-        $pakets = Paket::all(); // Ambil semua paket untuk form pemesanan
-        return view('dashboard.pemesanan.create', compact('pakets'));
     }
 }

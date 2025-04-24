@@ -16,10 +16,12 @@ return new class extends Migration
             $table->string('nama_paket');
             $table->decimal('harga', 10, 2);
             $table->text('deskripsi');
-            $table->string('gambar');
+            $table->string('gambar')->nullable();
+            $table->integer('durasi')->nullable();  // Menambahkan kolom durasi (dalam menit atau jam, tergantung kebutuhan)
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      */

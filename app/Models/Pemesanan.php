@@ -2,25 +2,64 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Pemesanan extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'nama',
+        'email',
+        'paket_id',
+        'tanggal',
+        'jam',
+        'catatan',
+        'status_pemesanan',
+        'status_selesai',
+        'bukti_pembayaran'
+    ];
 
-    protected $fillable = ['user_id', 'nama', 'email', 'paket_id', 'tanggal', 'jam', 'catatan', 'bukti_pembayaran', 'status_pemesanan', 'status_selesai'];
+    protected $appends = ['jam_selesai'];
 
-
-    // Relasi ke tabel users
-    public function user()
-    {
-        return $this->belongsTo(\App\Models\User::class);
-    }
-    
-    // Relasi ke tabel pakets
+    // Relasi dengan Paket
     public function paket()
     {
-        return $this->belongsTo(\App\Models\Paket::class);
+        return $this->belongsTo(Paket::class);
+    }
+
+    // Relasi dengan User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Accessor untuk jam_selesai
+    public function getJamSelesaiAttribute()
+    {
+        try {
+            $jamMulai = Carbon::createFromFormat('H:i', $this->jam);
+            $jamSelesai = $jamMulai->copy()->addMinutes($this->paket->durasi);
+            return $jamSelesai->format('H:i');
+        } catch (\Exception $e) {
+            return '--:--';
+        }
+    }
+
+    // Cek apakah pemesanan sudah selesai berdasarkan waktu
+    public function getIsCompletedAttribute()
+    {
+        if ($this->status_selesai) {
+            return true;
+        }
+
+        try {
+            $tanggalSelesai = Carbon::parse($this->tanggal)
+                ->setTimeFromTimeString($this->jam_selesai);
+
+            return now()->greaterThanOrEqualTo($tanggalSelesai);
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }

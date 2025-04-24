@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\Paket; // Pastikan Model Paket digunakan
+use App\Models\Paket; 
 
 class DataSeeder extends Seeder
 {
@@ -34,6 +34,7 @@ class DataSeeder extends Seeder
                 'deskripsi' => 'Paket foto murah meriah dengan kualitas terbaik.',
                 'harga' => 150000,
                 'gambar' => 'paket/satu.jpg',
+                'durasi' => 30,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -41,6 +42,7 @@ class DataSeeder extends Seeder
                 'nama_paket' => 'Paket Premium',
                 'deskripsi' => 'Paket eksklusif dengan editing profesional.',
                 'harga' => 300000,
+                'durasi' => 60,
                 'gambar' => 'paket/duwa.jpg',
                 'created_at' => now(),
                 'updated_at' => now(),

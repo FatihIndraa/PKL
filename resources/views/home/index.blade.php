@@ -150,9 +150,10 @@
                             <img src="{{ asset('storage/' . $paket->gambar) }}"
                                 class="card-img-top img-thumbnail rounded-top" alt="{{ $paket->nama_paket }}"
                                 onclick="showDetail('{{ asset('storage/' . $paket->gambar) }}', 
-                                                '{{ $paket->nama_paket }}', 
-                                                '{{ $paket->deskripsi }}', 
-                                                '{{ number_format($paket->harga, 0, ',', '.') }}')"
+                                            '{{ $paket->nama_paket }}', 
+                                            '{{ $paket->deskripsi }}', 
+                                            '{{ number_format($paket->harga, 0, ',', '.') }}', 
+                                            '{{ $paket->durasi }}')"
                                 style="cursor: pointer; object-fit: cover; height: 250px;">
 
                             <div class="card-body text-center">
@@ -161,11 +162,14 @@
                                 <p class="card-price fw-bold text-primary">
                                     IDR {{ number_format($paket->harga, 0, ',', '.') }}
                                 </p>
+                                <!-- Menambahkan Durasi Paket -->
+                                <p class="text-muted">Durasi: {{ $paket->durasi }} menit</p>
                                 <button class="btn btn-primary"
                                     onclick="showDetail('{{ asset('storage/' . $paket->gambar) }}', 
-                                                        '{{ $paket->nama_paket }}', 
-                                                        '{{ $paket->deskripsi }}', 
-                                                        '{{ number_format($paket->harga, 0, ',', '.') }}')">
+                                                    '{{ $paket->nama_paket }}', 
+                                                    '{{ $paket->deskripsi }}', 
+                                                    '{{ number_format($paket->harga, 0, ',', '.') }}', 
+                                                    '{{ $paket->durasi }}')">
                                     <i class="bi bi-eye"></i> Lihat Detail
                                 </button>
                             </div>
@@ -175,7 +179,6 @@
             </div>
         </div>
     </section>
-
     <!-- Modal Detail Paket -->
     <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -190,6 +193,8 @@
                     <h4 id="detailNama" class="fw-bold"></h4>
                     <p id="detailDeskripsi"></p>
                     <p class="fw-bold text-primary">IDR <span id="detailHarga"></span></p>
+                    <!-- Menambahkan Durasi di Modal -->
+                    <p class="fw-bold text-muted" id="detailDurasi"></p>
                 </div>
             </div>
         </div>
@@ -198,6 +203,7 @@
     <!-- Formulir Pemesanan -->
     <section id="pesan" class="pt-5 pb-5">
         <div class="container">
+            <h2 class="mb-4 fw-bold">Pesan Sekarang</h2>
             <form action="{{ Auth::check() ? route('pemesanan.store') : route('login') }}" method="POST"
                 class="row g-3">
                 @csrf
@@ -220,15 +226,21 @@
                 <!-- Pilihan Paket -->
                 <div class="col-md-6">
                     <label class="form-label">Pilih Paket Foto</label>
-                    <select name="paket_id" class="form-select">
+                    <select name="paket_id" class="form-select" id="paketSelect">
                         <option value="">Pilih Paket</option>
                         @foreach ($pakets as $paket)
-                            <option value="{{ $paket->id }}"
+                            <option value="{{ $paket->id }}" data-durasi="{{ $paket->durasi }}"
                                 {{ old('paket_id') == $paket->id ? 'selected' : '' }}>
                                 {{ $paket->nama_paket }} - IDR {{ number_format($paket->harga, 0, ',', '.') }}
                             </option>
                         @endforeach
                     </select>
+                </div>
+
+                <!-- Durasi (Akan di-disable) -->
+                <div class="col-md-6">
+                    <label class="form-label">Durasi Sesi Foto</label>
+                    <input type="text" id="durasi" class="form-control" readonly>
                 </div>
 
                 <!-- Pilih Tanggal -->
@@ -263,6 +275,15 @@
         </div>
     </section>
 
+    <script>
+        // JavaScript untuk memperbarui durasi berdasarkan paket yang dipilih
+        document.getElementById('paketSelect').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var durasi = selectedOption.getAttribute('data-durasi');
+            document.getElementById('durasi').value = durasi ? durasi + ' menit' : '';
+        });
+    </script>
+
 
 
     <!-- Section Lokasi -->
@@ -291,6 +312,20 @@
             </div>
         </div>
     </section>
+
+    <script>
+        function showDetail(gambar, nama, deskripsi, harga, durasi) {
+            // Update gambar, nama, deskripsi, harga, dan durasi di modal
+            document.getElementById('detailGambar').src = gambar;
+            document.getElementById('detailNama').innerText = nama;
+            document.getElementById('detailDeskripsi').innerText = deskripsi;
+            document.getElementById('detailHarga').innerText = harga;
+            document.getElementById('detailDurasi').innerText = "Durasi: " + durasi + " menit";
+            // Menampilkan modal
+            var myModal = new bootstrap.Modal(document.getElementById('detailModal'));
+            myModal.show();
+        }
+    </script>
 
     <!-- Footer -->
     @include('layout.footer')
