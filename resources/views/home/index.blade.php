@@ -195,39 +195,6 @@
         </div>
     </div>
 
-    <!-- Testimoni Pelanggan -->
-    <section id="testimoni" class="pt-5 pb-5">
-        <div class="container text-center">
-            <h2 class="mb-4">Apa Kata Mereka?</h2>
-            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <p class="lead">"Layanan sangat memuaskan! Hasil foto sangat bagus dan profesional."</p>
-                        <p><strong>- Andi, Pengantin</strong></p>
-                    </div>
-                    <div class="carousel-item">
-                        <p class="lead">"Paket prewedding sangat membantu kami dalam mengabadikan kenangan manis."
-                        </p>
-                        <p><strong>- Budi & Sari, Pasangan Prewedding</strong></p>
-                    </div>
-                    <div class="carousel-item">
-                        <p class="lead">"Keluarga kami merasa sangat puas dengan hasil foto keluarga yang diambil di
-                            sini."</p>
-                        <p><strong>- Joko, Keluarga</strong></p>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                </button>
-            </div>
-        </div>
-    </section>
-
     <!-- Formulir Pemesanan -->
         <section id="pesan" class="pt-5 pb-5">
             <div class="container">
