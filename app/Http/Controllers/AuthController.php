@@ -51,7 +51,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             // Redirect ke halaman utama setelah login
-            return redirect()->route('home'); // Arahkan ke /
+            return redirect()->route('home'); 
 
 
         }

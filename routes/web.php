@@ -34,6 +34,8 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+
+
 // Route untuk admin
 Route::middleware(['auth', 'userAkses:admin'])->group(function () {
     Route::get('/dashboard/admin', [DashboardController::class, 'admin'])->name('dashboard.admin');
@@ -90,4 +92,7 @@ Route::post('/dashboard/pemesanan/{id}/upload-bukti', [PemesananController::clas
     ->name('dashboard.pemesanan.uploadBukti')
     ->middleware('auth');
 
-
+    Route::middleware(['auth'])->group(function () {
+        Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
+    });
+    

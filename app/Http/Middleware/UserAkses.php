@@ -17,3 +17,6 @@ class UserAkses
         return redirect('/')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
     }
 }
+// Di middleware atau login controller
+session(['url.intended' => url()->previous()]);
+
