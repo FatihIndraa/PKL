@@ -196,6 +196,7 @@
     </div>
 
     <!-- Formulir Pemesanan -->
+    @if (Auth::check())
         <section id="pesan" class="pt-5 pb-5">
             <div class="container">
                 <h2 class="mb-3 fw-bold text-center">Booking Sesi Foto Anda Sekarang</h2>
