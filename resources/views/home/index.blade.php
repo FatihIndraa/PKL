@@ -254,7 +254,9 @@
                     @auth
                         <button type="submit" class="btn btn-primary">Lanjutkan Pemesanan</button>
                     @else
-                        <a href="{{ route('login') }}" class="btn btn-link">Login untuk Lanjutkan</a>
+                        <a href="{{ route('login') }}" class="btn btn-primary">
+                            Login untuk Lanjutkan
+                        </a>
                     @endauth
                 </div>
             </form>
