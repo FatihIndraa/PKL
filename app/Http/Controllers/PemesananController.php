@@ -7,6 +7,7 @@ use App\Models\Pemesanan;
 use App\Models\Paket;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class PemesananController extends Controller
 {
@@ -15,7 +16,7 @@ class PemesananController extends Controller
         $user = auth()->user();
         $pakets = Paket::all();
 
-        // Update status selesai otomatis
+        // Update semua status dulu
         $this->updateCompletedStatus();
 
         $pemesanans = Pemesanan::with(['paket', 'user'])
@@ -28,17 +29,35 @@ class PemesananController extends Controller
         return view('dashboard.pemesanan.index', compact('pemesanans', 'pakets'));
     }
 
+
     protected function updateCompletedStatus()
     {
-        Pemesanan::where('status_selesai', false)
-            ->where('status_pemesanan', 'disetujui')
+        Pemesanan::where('status_selesai', 'belum_selesai')  // Filter status_selesai yang belum selesai
             ->get()
             ->each(function ($pemesanan) {
-                if ($pemesanan->is_completed) {
-                    $pemesanan->update(['status_selesai' => true]);
+                // Pastikan paket ada
+                if (!$pemesanan->paket) {
+                    return; // Skip jika tidak ada paket
+                }
+
+                // Menggabungkan tanggal dan jam pemesanan
+                $start = Carbon::parse($pemesanan->tanggal . ' ' . $pemesanan->jam);
+                // Menambahkan durasi ke waktu pemesanan untuk mendapatkan jam selesai
+                $jamSelesai = $start->copy()->addMinutes($pemesanan->paket->durasi);
+
+                // Debugging: Cek jam selesai
+                Log::info("Pemesan id {$pemesanan->id} jam selesai: {$jamSelesai}");
+
+                // Cek jika waktu sekarang sudah lebih dari atau sama dengan jam selesai
+                if (now()->greaterThanOrEqualTo($jamSelesai)) {
+                    Log::info('Mengupdate pemesanan ' . $pemesanan->id . ' ke status selesai');
+                    // Update status selesai
+                    $pemesanan->update(['status_selesai' => 'selesai']);
                 }
             });
     }
+
+
     public function store(Request $request)
     {
         $request->validate([
@@ -61,11 +80,14 @@ class PemesananController extends Controller
             'jam' => $request->jam,
             'catatan' => $request->catatan,
             'status_pemesanan' => 'pending',
-            // Tidak perlu menyimpan jam_selesai karena dihitung via accessor
         ]);
+
+        // Panggil updateStatus setelah pemesanan disimpan
+        $this->updateCompletedStatus();
 
         return redirect()->route('pembayaran.show', $pemesanan->id);
     }
+
 
     public function storeAdmin(Request $request)
     {
@@ -108,11 +130,7 @@ class PemesananController extends Controller
 
         $pemesanan = Pemesanan::findOrFail($id);
 
-        // Buat direktori jika belum ada
-        if (!file_exists(public_path('uploads/bukti_pembayaran'))) {
-            mkdir(public_path('uploads/bukti_pembayaran'), 0777, true);
-        }
-
+        // Proses upload bukti pembayaran
         if ($request->hasFile('bukti_pembayaran')) {
             $file = $request->file('bukti_pembayaran');
             $filename = time() . '.' . $file->getClientOriginalExtension();
@@ -124,8 +142,12 @@ class PemesananController extends Controller
             ]);
         }
 
+        // Panggil updateStatus setelah pembayaran di-upload
+        $this->updateCompletedStatus();
+
         return redirect()->route('home')->with('success', 'Bukti pembayaran berhasil diunggah!');
     }
+
 
     public function approve($id)
     {

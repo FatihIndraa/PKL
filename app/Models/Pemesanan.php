@@ -7,6 +7,12 @@ use Carbon\Carbon;
 
 class Pemesanan extends Model
 {
+    // di app/Models/Pemesanan.php
+    public function isSelesai()
+    {
+        return $this->status_selesai == 'selesai';
+    }
+
     protected $fillable = [
         'user_id',
         'nama',

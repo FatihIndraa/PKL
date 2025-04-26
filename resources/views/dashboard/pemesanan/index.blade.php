@@ -58,12 +58,14 @@
                                 </form>
                             </td>
                             <td>
-                                @if ($pemesanan->status_selesai)
+                                @if ($pemesanan->status_selesai == 'selesai')
                                     <span class="badge bg-success">Selesai</span>
                                 @else
                                     <span class="badge bg-warning">Berlangsung</span>
                                 @endif
+
                             </td>
+
                             <td>
                                 <button class="btn btn-info btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modalDetail{{ $pemesanan->id }}">Detail</button>
